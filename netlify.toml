@@ -1,0 +1,13 @@
+# Netlify configuration for Daily Standard
+# https://docs.netlify.com/configure-builds/file-based-configuration/
+
+[build]
+  publish = "public"
+  command = ""   # No build step — static site
+
+# Optional: redirect www to apex or vice versa
+# [[redirects]]
+#   from = "https://www.dailystandardprotein.com/*"
+#   to = "https://dailystandardprotein.com/:splat"
+#   status = 301
+#   force = true
