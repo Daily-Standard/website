@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 720" fill="none" aria-hidden="true">
+  <defs>
+    <linearGradient id="amSky" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#f7f5f1"/>
+      <stop offset="100%" stop-color="#ddd6ca"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="72%" cy="28%" r="35%">
+      <stop offset="0%" stop-color="#e8e017" stop-opacity="0.45"/>
+      <stop offset="70%" stop-color="#e8e017" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="560" height="720" fill="url(#amSky)"/>
+  <rect width="560" height="720" fill="url(#sun)"/>
+  <path d="M0 520 L560 480 L560 720 L0 720 Z" fill="#c4bdb2" opacity="0.35"/>
+  <path d="M0 532 L560 492" stroke="#4a6741" stroke-opacity="0.25" stroke-width="1"/>
+  <rect x="200" y="380" width="160" height="150" rx="12" fill="#2a2a2a" opacity="0.08"/>
+  <rect x="212" y="392" width="136" height="120" rx="8" fill="#fff" opacity="0.5"/>
+  <path d="M270 360 Q260 320 275 290" stroke="#8a8580" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.35"/>
+  <path d="M295 368 Q288 330 300 298" stroke="#8a8580" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.28"/>
+  <text x="280" y="620" text-anchor="middle" fill="#6b6560" font-family="system-ui, sans-serif" font-size="10" font-weight="600" letter-spacing="0.18em">MORNING CHAOS &#183; ABSTRACT</text>
+</svg>

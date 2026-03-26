@@ -1,13 +1,47 @@
-# Netlify configuration for Daily Standard
+# Netlify — Dad Gains (public site + subscribe function)
 # https://docs.netlify.com/configure-builds/file-based-configuration/
 
 [build]
   publish = "public"
   command = ""   # No build step — static site
 
-# Optional: redirect www to apex or vice versa
-# [[redirects]]
-#   from = "https://www.dailystandardprotein.com/*"
-#   to = "https://dailystandardprotein.com/:splat"
-#   status = 301
-#   force = true
+# --- dadgains.co (add both apex + www in Netlify → Domain management) ---
+# Canonical: https://dadgains.co — www redirects here. Swap if you prefer www.
+
+[[redirects]]
+  from = "http://dadgains.co/*"
+  to = "https://dadgains.co/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.dadgains.co/*"
+  to = "https://dadgains.co/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.dadgains.co/*"
+  to = "https://dadgains.co/:splat"
+  status = 301
+  force = true
+
+# --- dailystandardprotein.com (legacy; remove when no longer needed) ---
+
+[[redirects]]
+  from = "http://dailystandardprotein.com/*"
+  to = "https://dailystandardprotein.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.dailystandardprotein.com/*"
+  to = "https://dailystandardprotein.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.dailystandardprotein.com/*"
+  to = "https://dailystandardprotein.com/:splat"
+  status = 301
+  force = true

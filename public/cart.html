@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your bag — Dad Gains</title>
+  <meta name="description" content="Review your Dad Gains bag before checkout.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/checkout.css">
+</head>
+<body>
+
+  <div class="announce-bar" role="status">Free US shipping on <strong>orders $50+</strong></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo nav-logo--dadgains" aria-label="Dad Gains home">
+        <span class="nav-logo-line">Dad</span>
+        <span class="nav-logo-rule" aria-hidden="true"></span>
+        <span class="nav-logo-line">Gains</span>
+      </a>
+      <div class="nav-links">
+        <a href="/#about" class="nav-link">About</a>
+        <a href="/#product" class="nav-link">Product</a>
+        <a href="shop.html" class="nav-link">Shop</a>
+        <a href="cart.html" class="nav-bag" aria-label="Shopping bag">
+          <svg class="nav-bag-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span id="nav-bag-count" class="nav-bag-count nav-bag-count--empty" aria-live="polite"></span>
+        </a>
+        <a href="/#join" class="btn btn-sm btn--yellow">Get updates</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="cart-page">
+    <h1>Your bag</h1>
+    <p class="checkout-disclaimer" style="margin-bottom: 24px;">Preorder interest flow — no charge until launch.</p>
+
+    <div id="cart-empty" class="cart-empty" hidden>
+      <p>Your bag is empty.</p>
+      <a href="shop.html" class="btn btn-lg btn--yellow">Shop Lemonade</a>
+    </div>
+
+    <div id="cart-filled" hidden>
+      <div id="cart-lines" aria-live="polite"></div>
+
+      <div class="cart-summary-card">
+        <p id="cart-ship-promo" class="shipping-promo-pill" aria-live="polite"></p>
+        <div class="checkout-line">
+          <span>Subtotal</span>
+          <span id="cart-subtotal"></span>
+        </div>
+        <div class="checkout-line">
+          <span id="cart-ship-label">Shipping (est.)</span>
+          <span id="cart-ship-amount"></span>
+        </div>
+        <div class="checkout-line">
+          <span>Total</span>
+          <span id="cart-total"></span>
+        </div>
+        <div class="checkout-actions" style="margin-top: 20px;">
+          <a href="checkout.html" class="btn btn--yellow">Checkout</a>
+          <a href="shop.html" class="btn btn-outline">Continue shopping</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="footer-logo footer-logo--dadgains nav-logo--dadgains" aria-label="Dad Gains">
+            <span class="nav-logo-line">Dad</span>
+            <span class="nav-logo-rule" aria-hidden="true"></span>
+            <span class="nav-logo-line">Gains</span>
+          </div>
+          <p class="footer-tagline">Not a lifestyle brand—just protein.</p>
+        </div>
+        <div class="footer-bottom">
+          <p class="footer-copy">&copy; 2026 Dad Gains. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/cart.js"></script>
+  <script>
+    (function () {
+      const emptyEl = document.getElementById('cart-empty');
+      const filledEl = document.getElementById('cart-filled');
+      const linesEl = document.getElementById('cart-lines');
+      const promoEl = document.getElementById('cart-ship-promo');
+
+      function esc(s) {
+        const d = document.createElement('div');
+        d.textContent = s;
+        return d.innerHTML;
+      }
+
+      function render() {
+        const cart = window.DadGainsCart.getCart();
+        const t = window.DadGainsCart.getTotals();
+        const fmt = window.DadGainsCart.formatMoney;
+
+        if (cart.length === 0) {
+          emptyEl.hidden = false;
+          filledEl.hidden = true;
+          return;
+        }
+
+        emptyEl.hidden = true;
+        filledEl.hidden = false;
+
+        linesEl.innerHTML = cart.map(function (line) {
+          const lineTotal = line.price * line.qty;
+          return (
+            '<article class="cart-line" data-sku="' + esc(line.sku) + '">' +
+              '<img class="cart-line-img" src="' + esc(line.image) + '" alt="">' +
+              '<div class="cart-line-meta">' +
+                '<strong>' + esc(line.name) + '</strong>' +
+                '<span class="cart-line-price">' + esc(fmt(line.price)) + ' each · ' + esc(fmt(lineTotal)) + ' line total</span>' +
+              '</div>' +
+              '<div class="cart-line-actions">' +
+                '<button type="button" class="cart-qty-btn" data-act="dec" aria-label="Decrease quantity">−</button>' +
+                '<span class="cart-qty-val">' + line.qty + '</span>' +
+                '<button type="button" class="cart-qty-btn" data-act="inc" aria-label="Increase quantity">+</button>' +
+                '<button type="button" class="cart-remove" data-act="remove">Remove</button>' +
+              '</div>' +
+            '</article>'
+          );
+        }).join('');
+
+        document.getElementById('cart-subtotal').textContent = fmt(t.subtotal);
+        document.getElementById('cart-ship-amount').textContent = fmt(t.shipping);
+        document.getElementById('cart-total').textContent = fmt(t.total);
+
+        const shipLabel = document.getElementById('cart-ship-label');
+        if (t.qualifiesFreeShip) {
+          shipLabel.textContent = 'Free (orders $' + t.freeShippingMin + '+)';
+          promoEl.textContent = 'You qualify for free US shipping (orders $' + t.freeShippingMin + '+).';
+        } else {
+          shipLabel.textContent = 'Shipping (est.)';
+          var need = Math.max(0, t.freeShippingMin - t.subtotal);
+          promoEl.textContent = 'Add ' + fmt(need) + ' more for free US shipping ($' + t.freeShippingMin + '+). Flat est. ' + fmt(t.estShippingFlat) + ' until then.';
+        }
+
+        linesEl.querySelectorAll('.cart-line').forEach(function (row) {
+          var sku = row.getAttribute('data-sku');
+          row.querySelector('[data-act="dec"]').addEventListener('click', function () {
+            var line = window.DadGainsCart.getCart().find(function (l) { return l.sku === sku; });
+            if (line) window.DadGainsCart.updateQty(sku, line.qty - 1);
+          });
+          row.querySelector('[data-act="inc"]').addEventListener('click', function () {
+            var line = window.DadGainsCart.getCart().find(function (l) { return l.sku === sku; });
+            if (line) window.DadGainsCart.updateQty(sku, line.qty + 1);
+          });
+          row.querySelector('[data-act="remove"]').addEventListener('click', function () {
+            window.DadGainsCart.removeLine(sku);
+          });
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', render);
+      window.addEventListener('dadgains-cart-updated', render);
+    })();
+  </script>
+</body>
+</html>

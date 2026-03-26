@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 720" fill="none" aria-hidden="true">
+  <defs>
+    <linearGradient id="pourBg" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#faf8f4"/>
+      <stop offset="100%" stop-color="#e8e4dc"/>
+    </linearGradient>
+    <linearGradient id="liquid" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#e8e017" stop-opacity="0.85"/>
+      <stop offset="55%" stop-color="#f5f04a" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="stream" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e8e017" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#e8e017" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="glassClip">
+      <path d="M175 120h210l-18 420c-2 28-24 50-52 50H245c-28 0-50-22-52-50L175 120z"/>
+    </clipPath>
+  </defs>
+  <rect width="560" height="720" fill="url(#pourBg)"/>
+  <path d="M280 0 Q295 80 288 200 Q282 280 285 360" stroke="url(#stream)" stroke-width="14" stroke-linecap="round" fill="none" opacity="0.85"/>
+  <path d="M175 120h210l-18 420c-2 28-24 50-52 50H245c-28 0-50-22-52-50L175 120z" stroke="#2a2a2a" stroke-width="2.5" fill="rgba(255,255,255,0.25)"/>
+  <g clip-path="url(#glassClip)">
+    <rect x="170" y="320" width="220" height="280" fill="url(#liquid)"/>
+    <rect x="210" y="360" width="42" height="42" rx="8" fill="#fff" opacity="0.55" transform="rotate(-8 231 381)"/>
+    <rect x="285" y="340" width="38" height="38" rx="7" fill="#fff" opacity="0.45" transform="rotate(12 304 359)"/>
+    <rect x="245" y="420" width="48" height="40" rx="9" fill="#fff" opacity="0.4" transform="rotate(6 269 440)"/>
+  </g>
+  <ellipse cx="280" cy="120" rx="105" ry="10" stroke="#fff" stroke-opacity="0.35" stroke-width="2" fill="none"/>
+  <text x="280" y="640" text-anchor="middle" fill="#8a8580" font-family="system-ui, sans-serif" font-size="10" font-weight="600" letter-spacing="0.2em">CLEAR &#183; NOT A SHAKE</text>
+</svg>

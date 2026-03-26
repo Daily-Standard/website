@@ -3,28 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daily Standard — Clear Protein for Dads. 20g. 80 Calories. Zero Junk.</title>
-  <meta name="description" content="Clear grass-fed whey isolate. 20g protein. 80 calories. No artificial sweeteners. No gums. 5 ingredients. Built for every day — not just gym days. Made by dads, for dads.">
-  <meta property="og:title" content="Daily Standard — Clear Protein for Dads">
-  <meta property="og:description" content="20g protein. 80 calories. 5 ingredients. No artificial sweeteners. No gums. Mixes clear like juice.">
-  <meta property="og:image" content="images/hero-product.png">
+  <title>Dad Gains — For dads · Clear protein (Lemonade)</title>
+  <meta name="description" content="Protein for dads—clearly. We’re Steven &amp; Sebastian. Lemonade clear whey isolate: 20g protein, 80 calories, 5 ingredients. For partners, little kids, WFH chaos, and zero gym guilt.">
+  <meta property="og:title" content="Dad Gains — Protein for dads">
+  <meta property="og:description" content="We don’t hedge the audience. Clear protein for fathers—Lemonade first. 20g, 80 cal, 5 ingredients.">
+  <!-- Swap to a 1200px+ JPG/PNG for best Facebook/LinkedIn previews when you have a photo -->
+  <meta property="og:image" content="images/dadgains-pouch-hero.svg">
   <meta property="og:type" content="website">
+  <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
+  <div class="announce-bar" role="status">Free US shipping on <strong>orders $50+</strong></div>
   <!-- NAV -->
   <nav class="nav">
     <div class="nav-inner">
-      <a href="/" class="nav-logo">DAILY STANDARD</a>
+      <a href="/" class="nav-logo nav-logo--dadgains" aria-label="Dad Gains home">
+        <span class="nav-logo-line">Dad</span>
+        <span class="nav-logo-rule" aria-hidden="true"></span>
+        <span class="nav-logo-line">Gains</span>
+      </a>
       <div class="nav-links">
         <a href="#about" class="nav-link">About</a>
         <a href="#product" class="nav-link">Product</a>
         <a href="#story" class="nav-link">Our Story</a>
-        <a href="#join" class="btn btn-sm">Join the Waitlist</a>
+        <a href="shop.html" class="nav-link">Shop</a>
+        <a href="cart.html" class="nav-bag" aria-label="Shopping bag">
+          <svg class="nav-bag-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span id="nav-bag-count" class="nav-bag-count nav-bag-count--empty" aria-live="polite"></span>
+        </a>
+        <a href="#join" class="btn btn-sm btn--yellow">Get updates</a>
       </div>
     </div>
   </nav>
@@ -33,17 +49,26 @@
   <section class="hero">
     <div class="hero-inner">
       <div class="hero-content">
-        <p class="hero-tag">Clear Protein for Dads</p>
-        <h1>Being a dad is hard.<br>At least get your protein&nbsp;in.</h1>
-        <p class="hero-sub">Clear grass-fed whey isolate. 20g protein. 80 calories. 5 ingredients. No artificial sweeteners. No gums. Mixes clear like juice — not a thick shake.</p>
+        <p class="hero-tag">For dads</p>
+        <p class="hero-audience-strap">We don’t soft-pedal who this is for. Dad Gains is built for <strong>fathers</strong>—partners, careers, little kids, not enough hours. If that’s you, you’re home. If not, no hard feelings.</p>
+        <h1>Little kids. Packed calendar.<br>Zero shame if the gym’s not&nbsp;happening.</h1>
+        <p class="hero-sub">Hey—we’re Steven and Sebastian. We built this for us: mornings when “eating clean” is a nice idea and you’re just trying to get enough protein between meetings, bottles, and whatever’s on fire. Clear grass-fed whey isolate. <strong>Lemonade</strong> to start. 20g protein, 80 calories, 5 ingredients. Mixes clear—more lemonade stand, less 2012 chalk shake.</p>
         <form class="hero-form" id="hero-form">
           <input type="email" placeholder="Your email" required aria-label="Email address">
-          <button type="submit" class="btn">Join Founding Members</button>
+          <button type="submit" class="btn btn--yellow">Yeah, email me</button>
         </form>
-        <p class="hero-note">Founding member pricing. Limited spots. No spam, ever.</p>
+        <p class="hero-note">No spam. No manifestos. Just updates from two dads who are also tired.</p>
       </div>
       <div class="hero-product">
-        <img src="images/hero-product.png" alt="Daily Standard Clear Protein — Lightly Sweetened Vanilla pouch" class="hero-product-img">
+        <div class="hero-media">
+          <picture class="hero-product-picture">
+            <img src="images/dadgains-pouch-hero.svg" alt="Dad Gains Lemonade — illustrated pouch preview (replace with real pack photo when ready)" class="hero-product-img hero-product-img--render" width="720" height="800" fetchpriority="high">
+          </picture>
+          <div class="hero-pour-slot">
+            <img src="images/dadgains-glass-pour.svg" alt="Illustration: clear lemonade-style protein drink in a glass with ice" class="hero-pour-illustration" width="560" height="720">
+            <p class="hero-pour-slot-caption">Pour / glass shot goes here when you have it — or drop in <code class="hero-code">videos/pour.mp4</code> beside the pouch.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -69,6 +94,7 @@
           <span class="stat-label">Ingredients</span>
         </div>
       </div>
+      <p class="stats-promo">Free US shipping on <strong>orders $50+</strong></p>
     </div>
   </section>
 
@@ -104,11 +130,11 @@
   <section class="problem">
     <div class="container">
       <div class="problem-inner">
-        <h2>You used to work out 6 days a week.</h2>
-        <p>Now it's 2, maybe 3 if the stars align. The kids are up at 6. Work doesn't stop. Date night is Netflix on the couch. And somewhere in between all of that, you're supposed to eat clean and hit your macros?</p>
-        <p>You're not looking for perfect. You just want to take care of yourself without it becoming another full-time job.</p>
-        <p>So we made a protein that fits your life, not the other way around. Clear. Light. Drinks like juice. 20 grams of protein in 80 calories with zero junk.</p>
-        <p class="problem-kicker">That's Daily Standard.</p>
+        <h2>You’re not “bad at wellness.” You’re just out of bandwidth.</h2>
+        <p>If you’re partnered or married, WFH or hybrid, and your crew is somewhere between newborn and pre-teen, you know the vibe: coffee between calls, someone asking for more blueberries, and lunch becoming “whatever’s fastest.” Skipping protein isn’t a character flaw—it’s a scheduling conflict.</p>
+        <p>We’re not here to guilt you about the gym. Side hustle, kids, life admin—you can do the whole thing. You just need a little help getting fuel in without turning it into a whole project.</p>
+        <p>That’s why we made Dad Gains: clear grass-fed whey isolate that drinks easy (starting with <strong>Lemonade</strong>), 20g protein, 80 calories, 5 ingredients—so you can feel like you’ve got something handled, even when the day is chaos.</p>
+        <p class="problem-kicker">Same boat. Better backup.</p>
       </div>
     </div>
   </section>
@@ -125,14 +151,14 @@
               <span class="check">&#10003;</span>
               <div>
                 <strong>20g grass-fed whey isolate</strong>
-                <span>Clear protein from pasture-raised cows. Drinks like juice.</span>
+                <span>Clear protein from pasture-raised cows. All the benefits, none of the bloating or stomach discomfort. Drinks like juice.</span>
               </div>
             </li>
             <li>
               <span class="check">&#10003;</span>
               <div>
                 <strong>80 calories. Zero sugar.</strong>
-                <span>Best protein-to-calorie ratio you'll find.</span>
+                <span>A lot of protein for not a lot of calories—without making lunch a spreadsheet.</span>
               </div>
             </li>
             <li>
@@ -178,8 +204,8 @@
             <li>
               <span class="x">&times;</span>
               <div>
-                <strong>No gym-bro energy</strong>
-                <span>This isn't that.</span>
+                <strong>No “crush it” branding</strong>
+                <span>If it feels like a supplement store yelling at you, we didn’t do our job.</span>
               </div>
             </li>
           </ul>
@@ -188,14 +214,14 @@
     </div>
   </section>
 
-  <!-- DAILY STANDARD -->
+  <!-- DIFFERENTIATOR -->
   <section class="daily">
     <div class="container">
       <div class="daily-inner">
-        <p class="daily-label">The Differentiator</p>
-        <h2>Daily protein,<br>not workout fuel.</h2>
-        <p>You don't need a workout to need protein. Strength isn't built in one session — it's built over years of showing up. For yourself. For your family.</p>
-        <p>Daily Standard is protein for the days you train <em>and</em> the days you don't.</p>
+        <p class="daily-label">The vibe</p>
+        <h2>Tuesday protein,<br>not a lifestyle brand.</h2>
+        <p>You’re allowed to need protein on a random Tuesday at 2pm. Not because you “earned it”—because you’re a human who’s been carrying a lot.</p>
+        <p>Dad Gains is for desk days, dad days, and everything in between. Clear whey isolate, lemonade-level drinkability, none of the bloat-y shake stuff.</p>
       </div>
     </div>
   </section>
@@ -205,15 +231,14 @@
     <div class="container">
       <div class="story-inner">
         <p class="story-label">Our Story</p>
-        <h2>Two dads who got tired of the same old protein.</h2>
+        <h2>We built this because we’re in it too.</h2>
         <div class="story-text">
-          <p>We met in college. Between classes and part-time jobs, we made it work — gym sessions, protein shakes, meal prep on Sundays. Fitness wasn't a hobby, it was just part of who we were.</p>
-          <p>Then we became dads.</p>
-          <p>Suddenly "6 days a week" became "whenever I can." The protein tubs gathering dust on the counter started to feel like a reminder of the guys we used to be. Every product on the shelf was either loaded with artificial junk, designed for bodybuilders, or wrapped in branding that felt like it was yelling at us.</p>
-          <p>We didn't need a mass gainer. We didn't need a pre-workout that made our skin tingle. We just needed clean protein we could drink every morning — whether we hit the gym that day or not. Something clear, light, and simple. Not a thick chalk shake from 2012.</p>
-          <p>So we built it.</p>
-          <p>Daily Standard is the protein we wish existed when we became dads. 5 ingredients. Mixes clear. Tastes like something you'd actually want to drink. Made for guys like us who still care about their health but don't have time to make it a personality.</p>
-          <p class="story-sign">— Steven &amp; Sebastian, Founders</p>
+          <p>We’re Steven and Sebastian. We met in college, back when meal prep was a personality trait and the gym was just… what Tuesday was for.</p>
+          <p>Then kids showed up—and suddenly “eating healthy” turned into a nice idea that rarely survives contact with real life. You’re trying to feel like you’ve got energy for the day, not spend mental energy feeling bad that you didn’t make it to the gym.</p>
+          <p>So we wanted to build something <em>for us</em>: for the days we don’t have time to eat perfect, but we still want to feel fueled, functional, and not gross after we drink it.</p>
+          <p>Everything on the shelf felt like it was trying too hard—either loud gym-bro energy, a science fair of ingredients, or a shake that tastes like punishment. We wanted clear, simple, actually drinkable. Lemonade-first. Dad logistics included.</p>
+          <p>If you’re nodding, you’re the whole reason this exists.</p>
+          <p class="story-sign">— Steven &amp; Sebastian</p>
         </div>
       </div>
     </div>
@@ -223,14 +248,14 @@
   <section class="join" id="join">
     <div class="container">
       <div class="join-inner">
-        <p class="join-label">Founding Members</p>
-        <h2>Be first. Get it for less.</h2>
-        <p>We're launching Daily Standard to a small group of founding members first. You'll get early access, founding member pricing, and a say in what we build next.</p>
+        <p class="join-label">The list</p>
+        <h2>Want a heads-up when we’re actually shipping?</h2>
+        <p>Drop your email. We’ll tell you when Lemonade is live, when we mess up, and when we fix it. Early access stuff will show up here too—we’re not going to “FOMO” you to death.</p>
         <form class="join-form" id="join-form">
           <input type="email" placeholder="Your email" required aria-label="Email address">
-          <button type="submit" class="btn btn-lg">Join the Founding Members</button>
+          <button type="submit" class="btn btn-lg btn--yellow">Cool, keep me posted</button>
         </form>
-        <p class="join-note">No spam. No hype. Just protein updates from two dads.</p>
+        <p class="join-note">No spam. No weekly essay. Just two dads with inboxes of our own.</p>
       </div>
     </div>
   </section>
@@ -240,15 +265,20 @@
     <div class="container">
       <div class="footer-inner">
         <div class="footer-brand">
-          <p class="footer-logo">DAILY STANDARD</p>
-          <p class="footer-tagline">Daily protein, not workout fuel.</p>
+          <div class="footer-logo footer-logo--dadgains nav-logo--dadgains" aria-label="Dad Gains">
+            <span class="nav-logo-line">Dad</span>
+            <span class="nav-logo-rule" aria-hidden="true"></span>
+            <span class="nav-logo-line">Gains</span>
+          </div>
+          <p class="footer-tagline">Not a lifestyle brand—just protein.</p>
         </div>
         <div class="footer-links">
           <div class="footer-col">
             <h4>Product</h4>
             <a href="#product">Ingredients</a>
             <a href="#about">Quality</a>
-            <a href="#join">Founding Members</a>
+            <a href="#join">Email list</a>
+            <a href="shop.html">Shop</a>
           </div>
           <div class="footer-col">
             <h4>Company</h4>
@@ -259,17 +289,36 @@
             <h4>Contact</h4>
             <a href="mailto:info@dailystandardprotein.com">info@dailystandardprotein.com</a>
           </div>
+          <div class="footer-col">
+            <h4>Legal</h4>
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="returns-refunds.html">Returns &amp; Refunds</a>
+            <a href="terms-of-service.html">Terms of Service</a>
+            <a href="faq.html">FAQ</a>
+          </div>
+        </div>
+        <div class="footer-social">
+          <a href="https://www.linkedin.com/company/dailystandardprotein" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/dailystandardprotein" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@dailystandardprotein" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+          </a>
         </div>
         <div class="footer-bottom">
-          <p class="footer-copy">&copy; 2026 Daily Standard. All rights reserved.</p>
+          <p class="footer-copy">&copy; 2026 Dad Gains. All rights reserved.</p>
           <p class="footer-legal">These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.</p>
         </div>
       </div>
     </div>
   </footer>
 
+  <script src="js/cart.js"></script>
   <script>
-    const FORM_ENDPOINT = null;
+    const FORM_ENDPOINT = '/.netlify/functions/subscribe';
 
     document.querySelectorAll('#hero-form, #join-form').forEach(form => {
       form.addEventListener('submit', function(e) {
@@ -278,28 +327,29 @@
         const btn = this.querySelector('button');
         const originalText = btn.textContent;
 
-        if (FORM_ENDPOINT) {
-          btn.textContent = 'Joining...';
-          btn.disabled = true;
-          fetch(FORM_ENDPOINT, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email_address: email }),
-          })
-          .then(() => {
+        btn.textContent = 'One sec…';
+        btn.disabled = true;
+
+        fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email_address: email }),
+        })
+        .then(res => res.json().then(data => ({ ok: res.ok, data })))
+        .then(({ ok, data }) => {
+          if (ok || data.success) {
             btn.textContent = "You're in!";
             this.querySelector('input').value = '';
-            setTimeout(() => { btn.textContent = originalText; btn.disabled = false; }, 3000);
-          })
-          .catch(() => {
-            btn.textContent = originalText;
-            btn.disabled = false;
-          });
-        } else {
-          btn.textContent = "You're in!";
-          this.querySelector('input').value = '';
-          setTimeout(() => { btn.textContent = originalText; }, 3000);
-        }
+            setTimeout(() => { window.location.href = 'thank-you.html'; }, 1500);
+          } else {
+            throw new Error(data.error || 'Subscription failed');
+          }
+        })
+        .catch(() => {
+          btn.textContent = originalText;
+          btn.disabled = false;
+          alert('Something went wrong. Please try again or email us at info@dailystandardprotein.com');
+        });
       });
     });
 
@@ -326,8 +376,8 @@
   </script>
   -->
 
-  <!-- Plausible Analytics (privacy-friendly alternative) -->
-  <!-- <script defer data-domain="dailystandardprotein.com" src="https://plausible.io/js/script.js"></script> -->
+  <!-- Plausible: add dadgains.co in Plausible dashboard, then uncomment -->
+  <!-- <script defer data-domain="dadgains.co" src="https://plausible.io/js/script.js"></script> -->
 
 </body>
 </html>

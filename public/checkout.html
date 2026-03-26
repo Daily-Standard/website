@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — Dad Gains</title>
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/checkout.css">
+</head>
+<body>
+
+  <div class="announce-bar" role="status">Free US shipping on <strong>orders $50+</strong></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo nav-logo--dadgains" aria-label="Dad Gains home">
+        <span class="nav-logo-line">Dad</span>
+        <span class="nav-logo-rule" aria-hidden="true"></span>
+        <span class="nav-logo-line">Gains</span>
+      </a>
+      <div class="nav-links">
+        <a href="shop.html" class="nav-link">Shop</a>
+        <a href="cart.html" class="nav-bag" aria-label="Shopping bag">
+          <svg class="nav-bag-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span id="nav-bag-count" class="nav-bag-count nav-bag-count--empty" aria-live="polite"></span>
+        </a>
+        <a href="/#join" class="btn btn-sm btn--yellow">Get updates</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="checkout-flow">
+    <div class="checkout-steps" id="step-labels">
+      <span class="active" id="lbl-1">1 Cart</span>
+      <span id="lbl-2">2 Shipping</span>
+      <span id="lbl-3">3 Payment</span>
+    </div>
+
+    <!-- Step 1: Cart -->
+    <div class="checkout-card" id="step-cart">
+      <h2>Your bag</h2>
+      <div id="checkout-cart-lines" class="checkout-cart-lines" aria-live="polite"></div>
+      <p id="co-ship-promo" class="shipping-promo-pill" style="margin-bottom: 0;"></p>
+      <div class="checkout-line">
+        <span>Subtotal</span>
+        <span id="co-subtotal">$0.00</span>
+      </div>
+      <div class="checkout-line">
+        <span id="co-ship-label">Shipping (est.)</span>
+        <span id="co-ship-amount">$0.00</span>
+      </div>
+      <div class="checkout-line">
+        <span>Total</span>
+        <span id="co-total">$0.00</span>
+      </div>
+      <p class="checkout-disclaimer">We’re not charging cards on this site yet. Go ahead and click through like a real checkout—when you “place order,” we’ll stop you on purpose, say we’re out of stock (~two weeks to restock), and ask for your email.</p>
+      <div class="checkout-actions">
+        <button type="button" class="btn btn--yellow" id="btn-to-shipping">Continue to shipping</button>
+        <a href="shop.html" class="btn btn-outline">Back to shop</a>
+      </div>
+    </div>
+
+    <!-- Step 2: Shipping -->
+    <div class="checkout-card checkout-hidden" id="step-shipping">
+      <h2>Shipping</h2>
+      <div class="checkout-field">
+        <label for="ship-email">Email</label>
+        <input type="email" id="ship-email" required autocomplete="email" placeholder="you@example.com">
+      </div>
+      <div class="checkout-field">
+        <label for="ship-name">Full name</label>
+        <input type="text" id="ship-name" autocomplete="name" placeholder="First and last name">
+      </div>
+      <div class="checkout-field">
+        <label for="ship-address">Address</label>
+        <input type="text" id="ship-address" autocomplete="street-address" placeholder="Street address">
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+        <div class="checkout-field">
+          <label for="ship-city">City</label>
+          <input type="text" id="ship-city" autocomplete="address-level2">
+        </div>
+        <div class="checkout-field">
+          <label for="ship-state">State</label>
+          <input type="text" id="ship-state" autocomplete="address-level1">
+        </div>
+        <div class="checkout-field">
+          <label for="ship-zip">ZIP</label>
+          <input type="text" id="ship-zip" autocomplete="postal-code">
+        </div>
+      </div>
+      <div class="checkout-actions">
+        <button type="button" class="btn btn--yellow" id="btn-to-payment">Continue to payment</button>
+        <button type="button" class="btn btn-outline" id="btn-back-cart">Back</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Payment (visual only — no card data is stored or transmitted) -->
+    <div class="checkout-card checkout-hidden" id="step-payment">
+      <h2>Payment</h2>
+      <p class="checkout-disclaimer" style="margin-bottom: 16px;">Yeah, it looks like a card form. We’re still not taking payment—you’re about to hit our “sold out” step on purpose so we can grab your email and tell you when Lemonade is back (~two weeks).</p>
+      <div class="checkout-field">
+        <label for="pay-card">Card number</label>
+        <input type="text" id="pay-card" inputmode="numeric" autocomplete="off" placeholder="0000 0000 0000 0000" maxlength="19" aria-describedby="pay-note">
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="checkout-field">
+          <label for="pay-exp">Expiry</label>
+          <input type="text" id="pay-exp" autocomplete="off" placeholder="MM / YY" maxlength="7">
+        </div>
+        <div class="checkout-field">
+          <label for="pay-cvc">CVC</label>
+          <input type="text" id="pay-cvc" autocomplete="off" placeholder="123" maxlength="4">
+        </div>
+      </div>
+      <p id="pay-note" class="checkout-disclaimer">Nothing here gets charged or stored. Jake Peralta could put “cool cool cool” in these fields and it’d end the same way: sold out screen + email.</p>
+      <div class="checkout-actions">
+        <button type="button" class="btn btn-lg btn--yellow" id="btn-place-order">Place order</button>
+        <button type="button" class="btn btn-outline" id="btn-back-shipping">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sold out modal -->
+  <div class="modal-overlay" id="soldout-modal" role="dialog" aria-modal="true" aria-labelledby="soldout-title">
+    <div class="modal-box">
+      <h2 id="soldout-title">Alright, real talk—we’re out right now</h2>
+      <p>We’re aiming to have bags back in about <strong>two weeks</strong>. Drop your email and we’ll message you the second Lemonade is live again. No spam, no “bro” energy—just “hey, it’s back.”</p>
+      <div class="checkout-field">
+        <label for="notify-email">Email</label>
+        <input type="email" id="notify-email" required placeholder="you@example.com">
+      </div>
+      <button type="button" class="btn btn-lg btn--yellow" id="btn-notify" style="width: 100%;">Notify me</button>
+      <p id="notify-status" style="margin-top: 12px; font-size: 14px; color: #4A6741; min-height: 1.2em;"></p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="footer-logo footer-logo--dadgains nav-logo--dadgains" aria-label="Dad Gains">
+            <span class="nav-logo-line">Dad</span>
+            <span class="nav-logo-rule" aria-hidden="true"></span>
+            <span class="nav-logo-line">Gains</span>
+          </div>
+          <p class="footer-tagline">Not a lifestyle brand—just protein.</p>
+        </div>
+        <div class="footer-bottom">
+          <p class="footer-copy">&copy; 2026 Dad Gains. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/cart.js"></script>
+  <script>
+    (function () {
+      if (!window.DadGainsCart || window.DadGainsCart.getCart().length === 0) {
+        window.location.replace('cart.html');
+        return;
+      }
+
+      const FORM_ENDPOINT = '/.netlify/functions/subscribe';
+
+      const stepCart = document.getElementById('step-cart');
+      const stepShipping = document.getElementById('step-shipping');
+      const stepPayment = document.getElementById('step-payment');
+      const lbl1 = document.getElementById('lbl-1');
+      const lbl2 = document.getElementById('lbl-2');
+      const lbl3 = document.getElementById('lbl-3');
+      const modal = document.getElementById('soldout-modal');
+      const shipEmail = document.getElementById('ship-email');
+      const notifyEmail = document.getElementById('notify-email');
+      const notifyStatus = document.getElementById('notify-status');
+      const linesEl = document.getElementById('checkout-cart-lines');
+      const promoEl = document.getElementById('co-ship-promo');
+
+      function esc(s) {
+        const d = document.createElement('div');
+        d.textContent = s;
+        return d.innerHTML;
+      }
+
+      function renderCartStep() {
+        const cart = window.DadGainsCart.getCart();
+        const t = window.DadGainsCart.getTotals();
+        const fmt = window.DadGainsCart.formatMoney;
+
+        if (cart.length === 0) {
+          window.location.replace('cart.html');
+          return;
+        }
+
+        linesEl.innerHTML = cart.map(function (line) {
+          const lineTotal = line.price * line.qty;
+          return (
+            '<div class="checkout-summary-line">' +
+              '<img src="' + esc(line.image) + '" alt="">' +
+              '<div class="checkout-summary-line-meta">' +
+                '<strong>' + esc(line.name) + '</strong>' +
+                '<span>' + line.qty + ' × ' + esc(fmt(line.price)) + '</span>' +
+              '</div>' +
+              '<span class="checkout-summary-line-price">' + esc(fmt(lineTotal)) + '</span>' +
+            '</div>'
+          );
+        }).join('');
+
+        document.getElementById('co-subtotal').textContent = fmt(t.subtotal);
+        document.getElementById('co-ship-amount').textContent = fmt(t.shipping);
+        document.getElementById('co-total').textContent = fmt(t.total);
+
+        const shipLabel = document.getElementById('co-ship-label');
+        if (t.qualifiesFreeShip) {
+          shipLabel.textContent = 'Free (orders $' + t.freeShippingMin + '+)';
+          promoEl.textContent = 'Free US shipping on orders $' + t.freeShippingMin + '+ — applied to this order.';
+        } else {
+          shipLabel.textContent = 'Shipping (est.)';
+          promoEl.textContent = 'Free US shipping on orders $' + t.freeShippingMin + '+. Est. flat ' + fmt(t.estShippingFlat) + ' until you reach the threshold.';
+        }
+      }
+
+      renderCartStep();
+      window.addEventListener('dadgains-cart-updated', renderCartStep);
+
+      function setStep(n) {
+        stepCart.classList.toggle('checkout-hidden', n !== 1);
+        stepShipping.classList.toggle('checkout-hidden', n !== 2);
+        stepPayment.classList.toggle('checkout-hidden', n !== 3);
+        lbl1.className = n === 1 ? 'active' : (n > 1 ? 'done' : '');
+        lbl2.className = n === 2 ? 'active' : (n > 2 ? 'done' : '');
+        lbl3.className = n === 3 ? 'active' : '';
+      }
+
+      document.getElementById('btn-to-shipping').addEventListener('click', () => setStep(2));
+      document.getElementById('btn-back-cart').addEventListener('click', () => setStep(1));
+      document.getElementById('btn-to-payment').addEventListener('click', () => {
+        if (!shipEmail.value.trim()) {
+          shipEmail.focus();
+          alert('Please enter your email.');
+          return;
+        }
+        setStep(3);
+      });
+      document.getElementById('btn-back-shipping').addEventListener('click', () => setStep(2));
+
+      document.getElementById('btn-place-order').addEventListener('click', () => {
+        notifyEmail.value = shipEmail.value.trim();
+        modal.classList.add('is-open');
+        notifyEmail.focus();
+      });
+
+      document.getElementById('btn-notify').addEventListener('click', () => {
+        const email = notifyEmail.value.trim();
+        if (!email) {
+          notifyEmail.focus();
+          return;
+        }
+        const btn = document.getElementById('btn-notify');
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+        notifyStatus.textContent = '';
+
+        fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email_address: email,
+            tags: ['checkout-soldout'],
+          }),
+        })
+          .then((res) => res.json().then((data) => ({ ok: res.ok, data })))
+          .then(({ ok, data }) => {
+            if (ok || data.success) {
+              notifyStatus.textContent = "You're on the list.";
+              setTimeout(() => {
+                window.location.href = 'thank-you.html?source=checkout';
+              }, 1200);
+            } else {
+              throw new Error(data.error);
+            }
+          })
+          .catch(() => {
+            btn.disabled = false;
+            btn.textContent = 'Notify me';
+            notifyStatus.textContent = 'Something went wrong. Try again or email info@dailystandardprotein.com';
+            notifyStatus.style.color = '#c00';
+          });
+      });
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('is-open');
+      });
+    })();
+  </script>
+</body>
+</html>

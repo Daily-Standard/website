@@ -1,15 +1,25 @@
 /* ============================================
-   DAILY STANDARD — Brand Styles
-   ============================================
-   Colors:
-     Background:    #F5F2ED (warm cream)
-     Primary text:  #2C2C2C (near-black)
-     Secondary:     #6B6560 (warm gray)
-     Accent:        #4A6741 (muted olive)
-     Light accent:  #E8E4DC (warm light gray)
-   Typography:
-     DM Sans (400, 500, 700)
+   DAD GAINS — Brand Styles
+   Inspired by rugged streetwear (dadgang.co): dark nav, cream body,
+   neon yellow accent, olive secondary. Logo: DAD / line / GAINS (Bebas Neue).
    ============================================ */
+
+:root {
+  --dg-cream: #f7f5f1;
+  --dg-cream-deep: #ebe8e1;
+  --dg-dark: #141414;
+  --dg-charcoal: #2a2a2a;
+  --dg-yellow: #e8e017;
+  --dg-yellow-hover: #f5f04a;
+  --dg-olive: #4a6741;
+  --dg-muted: #8a8580;
+  --announce-bar-height: 36px;
+  --radius: 14px;
+  --radius-sm: 8px;
+  --border-hairline: 1px solid rgba(44, 44, 44, 0.08);
+  --shadow-soft: 0 20px 50px rgba(20, 20, 20, 0.06);
+  --shadow-product: 0 24px 48px rgba(20, 20, 20, 0.08);
+}
 
 *,
 *::before,
@@ -28,15 +38,16 @@ html {
 body {
   font-family: "DM Sans", sans-serif;
   font-size: 17px;
-  line-height: 1.6;
-  color: #2C2C2C;
-  background: #F5F2ED;
+  line-height: 1.62;
+  letter-spacing: -0.01em;
+  color: var(--dg-charcoal);
+  background: var(--dg-cream);
 }
 
 .container {
-  max-width: 1080px;
+  max-width: 1120px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 28px;
 }
 
 h1, h2, h3 {
@@ -60,20 +71,34 @@ img {
 .btn {
   display: inline-block;
   padding: 14px 32px;
-  background: #2C2C2C;
-  color: #F5F2ED;
+  background: var(--dg-dark);
+  color: var(--dg-cream);
   font-family: "DM Sans", sans-serif;
   font-size: 15px;
   font-weight: 600;
+  letter-spacing: -0.01em;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.15s ease;
+  transition: background 0.2s ease, transform 0.15s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn:hover {
-  background: #4A6741;
+  background: var(--dg-yellow);
+  color: var(--dg-dark);
   transform: translateY(-1px);
+}
+
+.btn--yellow {
+  background: var(--dg-yellow);
+  color: var(--dg-dark);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset;
+}
+
+.btn--yellow:hover {
+  background: var(--dg-yellow-hover);
+  color: var(--dg-dark);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.45) inset, 0 8px 24px rgba(232, 224, 23, 0.25);
 }
 
 .btn-sm {
@@ -86,24 +111,54 @@ img {
   font-size: 16px;
 }
 
-/* ---- NAV ---- */
+/* ---- ANNOUNCEMENT BAR ---- */
 
-.nav {
+.announce-bar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
+  z-index: 102;
+  min-height: var(--announce-bar-height);
+  padding: 9px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--dg-dark);
+  color: rgba(245, 240, 232, 0.92);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.announce-bar strong,
+.announce-bar .announce-bar-accent {
+  color: var(--dg-yellow);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+/* ---- NAV ---- */
+
+.nav {
+  position: fixed;
+  top: var(--announce-bar-height);
+  left: 0;
+  right: 0;
   z-index: 100;
-  background: rgba(245, 242, 237, 0.92);
+  background: rgba(26, 26, 26, 0.96);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(44, 44, 44, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .nav-inner {
-  max-width: 1080px;
+  max-width: 1120px;
   margin: 0 auto;
-  padding: 16px 24px;
+  padding: 18px 28px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -113,7 +168,44 @@ img {
   font-size: 20px;
   font-weight: 700;
   letter-spacing: 0.08em;
-  color: #2C2C2C;
+  color: var(--dg-cream);
+}
+
+/* Dad Gains wordmark — DAD / rule / GAINS (matches logo sheet) */
+.nav-logo--dadgains {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  line-height: 1;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.nav-logo--dadgains .nav-logo-rule {
+  display: block;
+  width: 100%;
+  min-width: 3.25rem;
+  height: 2px;
+  background: var(--dg-olive);
+  border: none;
+  margin: 1px 0;
+}
+
+.nav-logo--dadgains.nav-logo--invert .nav-logo-rule {
+  background: var(--dg-yellow);
+}
+
+.nav-logo--dadgains.nav-logo--on-cream {
+  color: var(--dg-charcoal);
+}
+
+.nav-logo--dadgains.nav-logo--on-cream .nav-logo-rule {
+  background: var(--dg-olive);
 }
 
 .nav-links {
@@ -125,51 +217,127 @@ img {
 .nav-link {
   font-size: 14px;
   font-weight: 500;
-  color: #6B6560;
+  color: #b8b3ab;
   transition: color 0.2s ease;
 }
 
 .nav-link:hover {
-  color: #2C2C2C;
+  color: #fff;
+}
+
+.nav-bag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #b8b3ab;
+  transition: color 0.2s ease;
+}
+
+.nav-bag:hover {
+  color: #fff;
+}
+
+.nav-bag-icon {
+  flex-shrink: 0;
+}
+
+.nav-bag-count {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  background: var(--dg-yellow);
+  color: var(--dg-dark);
+  border-radius: 9px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+}
+
+.nav-bag-count--empty {
+  display: none;
 }
 
 /* ---- HERO ---- */
 
 .hero {
-  padding: 140px 24px 80px;
+  padding: calc(120px + var(--announce-bar-height)) 28px 96px;
+  background: var(--dg-dark);
+  color: var(--dg-cream);
 }
 
 .hero-inner {
-  max-width: 1080px;
+  max-width: 1120px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  gap: 72px;
   align-items: center;
 }
 
 .hero-tag {
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: #4A6741;
-  margin-bottom: 16px;
+  letter-spacing: 0.2em;
+  color: var(--dg-yellow);
+  margin-bottom: 14px;
+}
+
+.hero-audience-strap {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: rgba(245, 240, 232, 0.72);
+  margin-bottom: 22px;
+  max-width: 34rem;
+  letter-spacing: -0.01em;
+}
+
+.hero-audience-strap strong {
+  color: rgba(245, 240, 232, 0.95);
+  font-weight: 600;
+}
+
+/* Shop (cream background): same audience clarity as hero */
+.shop-audience-strap {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.55;
+  color: #6b6560;
+  margin-bottom: 18px;
+  max-width: 36rem;
+  letter-spacing: -0.01em;
+}
+
+.shop-audience-strap strong {
+  color: var(--dg-charcoal);
+  font-weight: 600;
+}
+
+.shop-inline-code {
+  font-family: ui-monospace, monospace;
+  font-size: 0.88em;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgba(44, 44, 44, 0.06);
 }
 
 .hero h1 {
-  font-size: 48px;
-  font-weight: 700;
-  margin-bottom: 20px;
-  color: #2C2C2C;
+  font-size: clamp(2rem, 4vw, 2.85rem);
+  font-weight: 600;
+  margin-bottom: 22px;
+  color: #fff;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
 }
 
 .hero-sub {
-  font-size: 18px;
-  color: #6B6560;
-  line-height: 1.6;
+  font-size: 17px;
+  color: rgba(200, 195, 187, 0.95);
+  line-height: 1.65;
   margin-bottom: 32px;
-  max-width: 480px;
+  max-width: 32rem;
 }
 
 .hero-form {
@@ -183,16 +351,17 @@ img {
   padding: 14px 18px;
   font-family: "DM Sans", sans-serif;
   font-size: 15px;
-  border: 1px solid #D5D0C8;
-  border-radius: 6px;
+  border: var(--border-hairline);
+  border-radius: var(--radius-sm);
   background: #fff;
   color: #2C2C2C;
   outline: none;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .hero-form input:focus {
-  border-color: #4A6741;
+  border-color: var(--dg-olive);
+  box-shadow: 0 0 0 3px rgba(74, 103, 65, 0.2);
 }
 
 .hero-form input::placeholder {
@@ -211,24 +380,121 @@ img {
   align-items: center;
 }
 
+.hero-media {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  width: 100%;
+  max-width: 520px;
+}
+
+@media (min-width: 900px) {
+  .hero-media {
+    grid-template-columns: 1fr 1fr;
+    max-width: 960px;
+    align-items: start;
+    gap: 32px;
+  }
+}
+
+.hero-product-picture {
+  display: block;
+}
+
 .hero-product-img {
   max-width: 420px;
   width: 100%;
   height: auto;
-  border-radius: 12px;
+  border-radius: var(--radius);
+  margin: 0 auto;
+  box-shadow: var(--shadow-product);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.hero-product-img--render {
+  max-height: min(72vh, 680px);
+  object-fit: contain;
+}
+
+.hero-pour-slot {
+  max-width: 420px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.hero-pour-illustration {
+  width: 100%;
+  max-width: 420px;
+  max-height: min(72vh, 680px);
+  height: auto;
+  margin: 0 auto;
+  display: block;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-product);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  object-fit: contain;
+}
+
+.hero-pour-slot-caption {
+  margin-top: 14px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: rgba(200, 195, 187, 0.75);
+  text-align: center;
+  max-width: 280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-code {
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(245, 240, 232, 0.9);
+}
+
+/* Real pour video: add <video class="hero-pour-video"> next to pouch when pour.mp4 exists */
+.hero-pour-video {
+  width: 100%;
+  max-width: 420px;
+  border-radius: var(--radius);
+  background: #222;
+  margin: 0 auto;
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: var(--shadow-product);
+}
+
+.stats-promo {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(245, 240, 232, 0.55);
+  margin-top: 28px;
+  letter-spacing: 0.06em;
+}
+
+.stats-promo strong {
+  color: var(--dg-yellow);
+  font-weight: 600;
 }
 
 /* ---- STATS BAR ---- */
 
 .stats {
-  padding: 40px 0;
-  background: #E8E4DC;
+  padding: 52px 0 48px;
+  background: var(--dg-charcoal);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .stats-inner {
   display: flex;
   justify-content: center;
-  gap: 60px;
+  gap: clamp(40px, 8vw, 72px);
+  flex-wrap: wrap;
 }
 
 .stat {
@@ -237,28 +503,29 @@ img {
 
 .stat-number {
   display: block;
-  font-size: 36px;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
   font-weight: 700;
-  color: #2C2C2C;
+  color: var(--dg-yellow);
   line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 .stat-label {
   display: block;
-  font-size: 13px;
-  font-weight: 500;
-  color: #6B6560;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(184, 179, 171, 0.9);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-top: 4px;
+  letter-spacing: 0.14em;
+  margin-top: 6px;
 }
 
 /* ---- TRUST BAR ---- */
 
 .trust {
-  padding: 32px 0;
-  background: #F5F2ED;
-  border-bottom: 1px solid #E8E4DC;
+  padding: 40px 0;
+  background: var(--dg-cream);
+  border-bottom: var(--border-hairline);
 }
 
 .trust-inner {
@@ -291,7 +558,7 @@ img {
 /* ---- PROBLEM ---- */
 
 .problem {
-  padding: 80px 0;
+  padding: 96px 0;
   background: #2C2C2C;
   color: #F5F2ED;
 }
@@ -325,14 +592,15 @@ img {
 /* ---- INGREDIENTS ---- */
 
 .ingredients {
-  padding: 80px 0;
+  padding: 96px 0;
 }
 
 .ingredients h2 {
-  font-size: 36px;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
   font-weight: 700;
   text-align: center;
-  margin-bottom: 48px;
+  margin-bottom: 52px;
+  letter-spacing: -0.03em;
 }
 
 .ingredients-grid {
@@ -343,8 +611,10 @@ img {
 
 .ingredients-card {
   background: #fff;
-  border-radius: 12px;
-  padding: 40px;
+  border-radius: var(--radius);
+  padding: 40px 44px;
+  border: var(--border-hairline);
+  box-shadow: var(--shadow-soft);
 }
 
 .ingredients-card h3 {
@@ -418,10 +688,10 @@ img {
   margin-top: 2px;
 }
 
-/* ---- DAILY SECTION ---- */
+/* ---- DIFFERENTIATOR (daily protein) ---- */
 
 .daily {
-  padding: 80px 0;
+  padding: 96px 0;
   background: #4A6741;
   color: #F5F2ED;
 }
@@ -442,9 +712,11 @@ img {
 }
 
 .daily h2 {
-  font-size: 42px;
-  font-weight: 700;
+  font-size: clamp(1.85rem, 3.5vw, 2.5rem);
+  font-weight: 600;
   margin-bottom: 24px;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
 }
 
 .daily p {
@@ -461,7 +733,7 @@ img {
 /* ---- STORY ---- */
 
 .story {
-  padding: 80px 0;
+  padding: 96px 0;
 }
 
 .story-inner {
@@ -474,7 +746,7 @@ img {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: #4A6741;
+  color: var(--dg-olive);
   margin-bottom: 16px;
   text-align: center;
 }
@@ -519,7 +791,7 @@ img {
 /* ---- JOIN / CTA ---- */
 
 .join {
-  padding: 80px 0;
+  padding: 96px 0;
   background: #2C2C2C;
   color: #F5F2ED;
 }
@@ -531,18 +803,20 @@ img {
 }
 
 .join-label {
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: #4A6741;
+  letter-spacing: 0.2em;
+  color: var(--dg-yellow);
   margin-bottom: 16px;
 }
 
 .join h2 {
-  font-size: 36px;
-  font-weight: 700;
+  font-size: clamp(1.65rem, 3vw, 2.1rem);
+  font-weight: 600;
   margin-bottom: 16px;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
 }
 
 .join > .container > .join-inner > p {
@@ -564,8 +838,8 @@ img {
   padding: 16px 18px;
   font-family: "DM Sans", sans-serif;
   font-size: 15px;
-  border: 1px solid #555;
-  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm);
   background: rgba(255, 255, 255, 0.08);
   color: #F5F2ED;
   outline: none;
@@ -573,7 +847,7 @@ img {
 }
 
 .join-form input:focus {
-  border-color: #4A6741;
+  border-color: var(--dg-yellow);
 }
 
 .join-form input::placeholder {
@@ -581,13 +855,14 @@ img {
 }
 
 .join-form .btn {
-  background: #4A6741;
-  color: #F5F2ED;
+  background: var(--dg-yellow);
+  color: var(--dg-dark);
   white-space: nowrap;
 }
 
 .join-form .btn:hover {
-  background: #5A7F51;
+  background: var(--dg-yellow-hover);
+  color: var(--dg-dark);
 }
 
 .join-note {
@@ -620,6 +895,10 @@ img {
   color: #F5F2ED;
   letter-spacing: 0.08em;
   margin-bottom: 6px;
+}
+
+.footer-logo.footer-logo--dadgains {
+  margin-bottom: 10px;
 }
 
 .footer-tagline {
@@ -655,6 +934,21 @@ img {
 }
 
 .footer-col a:hover {
+  color: #F5F2ED;
+}
+
+.footer-social {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.footer-social a {
+  color: #888;
+  transition: color 0.2s ease;
+}
+
+.footer-social a:hover {
   color: #F5F2ED;
 }
 
@@ -712,8 +1006,10 @@ img {
     order: -1;
   }
 
-  .hero-product-img {
+  .hero-product-img,
+  .hero-pour-illustration {
     max-width: 300px;
+    max-height: none;
   }
 
   .stats-inner {
@@ -807,7 +1103,13 @@ img {
     font-size: 16px;
   }
 
-  .hero-product-img {
+  .nav-logo--dadgains {
+    font-size: 18px;
+    letter-spacing: 0.12em;
+  }
+
+  .hero-product-img,
+  .hero-pour-illustration {
     max-width: 240px;
   }
 

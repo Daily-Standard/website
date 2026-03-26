@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lemonade — Dad Gains</title>
+  <meta name="description" content="For dads only—Lemonade clear whey isolate. 20g protein, 80 calories, 5 ingredients. Clean, premium protein without the ‘for everyone’ act.">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/checkout.css">
+</head>
+<body>
+
+  <div class="announce-bar" role="status">Free US shipping on <strong>orders $50+</strong></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo nav-logo--dadgains" aria-label="Dad Gains home">
+        <span class="nav-logo-line">Dad</span>
+        <span class="nav-logo-rule" aria-hidden="true"></span>
+        <span class="nav-logo-line">Gains</span>
+      </a>
+      <div class="nav-links">
+        <a href="/#about" class="nav-link">About</a>
+        <a href="/#product" class="nav-link">Product</a>
+        <a href="shop.html" class="nav-link">Shop</a>
+        <a href="cart.html" class="nav-bag" aria-label="Shopping bag">
+          <svg class="nav-bag-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span id="nav-bag-count" class="nav-bag-count nav-bag-count--empty" aria-live="polite"></span>
+        </a>
+        <a href="/#join" class="btn btn-sm btn--yellow">Get updates</a>
+      </div>
+    </div>
+  </nav>
+
+  <div id="shop-toast" class="toast-shop" role="status" aria-live="polite">Added to bag</div>
+
+  <!-- PDP layout inspired by clean supplement PDPs (e.g. Gramms): gallery + buy box -->
+  <section class="shop-pdp">
+    <div class="container shop-pdp-container">
+      <nav class="shop-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="shop-breadcrumb-sep" aria-hidden="true">/</span>
+        <a href="shop.html">Shop</a>
+        <span class="shop-breadcrumb-sep" aria-hidden="true">/</span>
+        <span class="shop-breadcrumb-current">Lemonade</span>
+      </nav>
+
+      <div class="shop-grid shop-grid--pdp">
+        <div class="shop-gallery-col">
+          <div class="product-gallery-main" id="product-gallery-main">
+            <img id="shop-main-img" class="product-gallery-main-img" src="images/dadgains-pouch-hero.svg" alt="Dad Gains Lemonade — pouch illustration" width="720" height="800">
+          </div>
+          <div class="product-gallery-thumbs" role="tablist" aria-label="Product images">
+            <button type="button" class="product-gallery-thumb is-active" data-src="images/dadgains-pouch-hero.svg" data-alt="Dad Gains Lemonade — front of pouch" data-object-fit="cover" aria-label="Pouch front" aria-selected="true">
+              <img src="images/dadgains-pouch-hero.svg" alt="">
+            </button>
+            <button type="button" class="product-gallery-thumb" data-src="images/dadgains-morning-abstract.svg" data-alt="At home — morning counter abstract" data-object-fit="cover" aria-label="Lifestyle">
+              <img src="images/dadgains-morning-abstract.svg" alt="">
+            </button>
+            <button type="button" class="product-gallery-thumb" data-src="images/dadgains-glass-pour.svg" data-alt="Clear lemonade-style drink in a glass with ice" data-object-fit="cover" aria-label="Glass">
+              <img src="images/dadgains-glass-pour.svg" alt="">
+            </button>
+            <button type="button" class="product-gallery-thumb product-gallery-thumb--label" data-src="images/dadgains-nutrition-label.svg" data-alt="Supplement Facts label — illustrative preview" data-object-fit="contain" aria-label="Nutrition label">
+              <img src="images/dadgains-nutrition-label.svg" alt="">
+            </button>
+          </div>
+          <p class="product-gallery-caption">Four views: pack, lifestyle, pour, and supplement facts. Swap files in <code class="shop-inline-code">public/images/</code> when you have photos—keep the same names or update <code class="shop-inline-code">data-src</code> here.</p>
+        </div>
+
+        <div class="shop-buy-col">
+          <p class="hero-tag shop-pdp-eyebrow">For dads</p>
+          <p class="shop-audience-strap">Built for <strong>fathers</strong>—same lane as the rest of the site.</p>
+          <h1 class="product-detail-title shop-pdp-title">Clear whey isolate</h1>
+          <p class="shop-pdp-flavor">Lemonade</p>
+          <p class="product-detail-lead shop-pdp-lead">Light, refreshing, not a chalk shake. 20g protein, 80 calories, 5 ingredients. No artificial sweeteners. No gums. Strawberry &amp; watermelon later—Lemonade ships first.</p>
+
+          <ul class="product-pdp-highlights" aria-label="Key benefits">
+            <li>
+              <span class="product-pdp-highlight-icon" aria-hidden="true">&#10003;</span>
+              <span><strong>20g protein</strong> from grass-fed whey isolate</span>
+            </li>
+            <li>
+              <span class="product-pdp-highlight-icon" aria-hidden="true">&#10003;</span>
+              <span><strong>0g sugar</strong> · easy on the gut</span>
+            </li>
+            <li>
+              <span class="product-pdp-highlight-icon" aria-hidden="true">&#10003;</span>
+              <span><strong>Drinks clear</strong> — more lemonade, less “bro shake”</span>
+            </li>
+          </ul>
+
+          <div class="shop-divider" role="presentation"></div>
+
+          <div class="shop-pdp-price-row">
+            <span class="shop-price shop-pdp-price">$55</span>
+            <span class="shop-pdp-serving-note">~18–20 servings / bag</span>
+          </div>
+          <p class="shipping-promo-pill">Free US shipping on <strong>orders $50+</strong></p>
+          <p class="shop-price-note">This bag qualifies for free shipping at checkout.</p>
+
+          <div class="product-trust-row shop-pdp-trust">
+            <span>Grass-fed</span>
+            <span>Third-party tested</span>
+            <span>cGMP</span>
+            <span>Made in USA</span>
+          </div>
+
+          <div class="shop-cta-row shop-pdp-ctas">
+            <button type="button" class="btn btn-lg btn--yellow" id="btn-add-bag">Add to bag</button>
+            <a href="cart.html" class="btn btn-lg btn-outline" id="link-view-bag">View bag</a>
+            <a href="checkout.html" class="btn btn-outline" id="link-checkout" hidden>Checkout</a>
+          </div>
+          <p class="checkout-disclaimer shop-pdp-disclaimer">You can add to bag and walk through checkout like normal—we’re <strong>not</strong> taking cards yet. When you try to place the order, we’ll tell you we’re out of stock, we’re aiming to be back in about <strong>two weeks</strong>, and ask for your email so we can ping you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="shop-detail-panel">
+    <div class="container">
+      <div class="shop-detail-grid">
+        <div>
+          <h2 class="shop-detail-heading">How to use</h2>
+          <p class="shop-detail-text">One scoop, cold water, shake hard. Start with 12–16 oz; tweak to taste.</p>
+        </div>
+        <div>
+          <h2 class="shop-detail-heading">What you’re getting</h2>
+          <p class="shop-detail-text">A stand-up pouch of clear Lemonade protein—not a tub of mystery dust. Full supplement facts are in the gallery (illustrative until the final label is printed).</p>
+        </div>
+      </div>
+      <p class="shop-detail-faq-link"><a href="faq.html">FAQ</a></p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="footer-logo footer-logo--dadgains nav-logo--dadgains" aria-label="Dad Gains">
+            <span class="nav-logo-line">Dad</span>
+            <span class="nav-logo-rule" aria-hidden="true"></span>
+            <span class="nav-logo-line">Gains</span>
+          </div>
+          <p class="footer-tagline">Not a lifestyle brand—just protein.</p>
+        </div>
+        <div class="footer-bottom">
+          <p class="footer-copy">&copy; 2026 Dad Gains. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/cart.js"></script>
+  <script>
+    (function () {
+      var PRODUCT = {
+        sku: 'lemonade-1lb',
+        name: 'Lemonade',
+        price: 55,
+        image: 'images/dadgains-pouch-hero.svg',
+      };
+
+      var mainImg = document.getElementById('shop-main-img');
+      var mainWrap = document.getElementById('product-gallery-main');
+
+      function applyThumbState(btn) {
+        var fit = btn.getAttribute('data-object-fit') || 'cover';
+        var isContain = fit === 'contain';
+        mainWrap.classList.toggle('product-gallery-main--contain', isContain);
+        mainImg.classList.toggle('product-gallery-main-img--contain', isContain);
+      }
+
+      document.querySelectorAll('.product-gallery-thumb').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('.product-gallery-thumb').forEach(function (b) {
+            b.classList.remove('is-active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          btn.classList.add('is-active');
+          btn.setAttribute('aria-selected', 'true');
+          mainImg.src = btn.getAttribute('data-src');
+          mainImg.alt = btn.getAttribute('data-alt') || '';
+          applyThumbState(btn);
+        });
+      });
+
+      applyThumbState(document.querySelector('.product-gallery-thumb.is-active'));
+
+      function updateCheckoutLink() {
+        var has = window.DadGainsCart.getCart().length > 0;
+        document.getElementById('link-checkout').hidden = !has;
+      }
+
+      function showToast() {
+        var t = document.getElementById('shop-toast');
+        t.classList.add('is-visible');
+        clearTimeout(window._dgToastTimer);
+        window._dgToastTimer = setTimeout(function () {
+          t.classList.remove('is-visible');
+        }, 2200);
+      }
+
+      document.getElementById('btn-add-bag').addEventListener('click', function () {
+        window.DadGainsCart.addItem({ sku: PRODUCT.sku, name: PRODUCT.name, price: PRODUCT.price, image: PRODUCT.image, qty: 1 });
+        showToast();
+        updateCheckoutLink();
+      });
+
+      document.addEventListener('DOMContentLoaded', updateCheckoutLink);
+      window.addEventListener('dadgains-cart-updated', updateCheckoutLink);
+    })();
+  </script>
+</body>
+</html>

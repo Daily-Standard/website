@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You're In — Dad Gains</title>
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <div class="announce-bar" role="status">Free US shipping on <strong>orders $50+</strong></div>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo nav-logo--dadgains" aria-label="Dad Gains home">
+        <span class="nav-logo-line">Dad</span>
+        <span class="nav-logo-rule" aria-hidden="true"></span>
+        <span class="nav-logo-line">Gains</span>
+      </a>
+      <div class="nav-links">
+        <a href="/#about" class="nav-link">About</a>
+        <a href="/#product" class="nav-link">Product</a>
+        <a href="/#story" class="nav-link">Our Story</a>
+        <a href="shop.html" class="nav-link">Shop</a>
+        <a href="cart.html" class="nav-bag" aria-label="Shopping bag">
+          <svg class="nav-bag-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span id="nav-bag-count" class="nav-bag-count nav-bag-count--empty" aria-live="polite"></span>
+        </a>
+        <a href="/#join" class="btn btn-sm btn--yellow">Get updates</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="join" style="min-height: 60vh; display: flex; align-items: center;">
+    <div class="container">
+      <div class="join-inner">
+        <p class="join-label">You're on the list</p>
+        <h2>Thanks for joining.</h2>
+        <p>We’re Steven and Sebastian—thanks for trusting us with your inbox. Dad Gains is clear grass-fed whey isolate (Lemonade first), 20g protein, 80 calories, 5 ingredients—built for dads who don’t have time for the performative stuff.</p>
+        <p id="thank-extra">We’ll email you when there’s real news—drops, restocks, and the occasional “oops we fixed it.”</p>
+        <a href="/" class="btn" style="margin-top: 24px;">Back to home</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="footer-logo footer-logo--dadgains nav-logo--dadgains" aria-label="Dad Gains">
+            <span class="nav-logo-line">Dad</span>
+            <span class="nav-logo-rule" aria-hidden="true"></span>
+            <span class="nav-logo-line">Gains</span>
+          </div>
+          <p class="footer-tagline">Not a lifestyle brand—just protein.</p>
+        </div>
+        <div class="footer-bottom">
+          <p class="footer-copy">&copy; 2026 Dad Gains. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/cart.js"></script>
+  <script>
+    if (new URLSearchParams(location.search).get('source') === 'checkout') {
+      document.getElementById('thank-extra').textContent =
+        "You made it all the way through checkout—we’re genuinely flattered. We’re out of stock right now and shooting for about two weeks to restock. We’ll email you when Lemonade is back.";
+    }
+  </script>
+</body>
+</html>
