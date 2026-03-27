@@ -22,9 +22,9 @@
           o.sku = 'lemonade-1lb';
           o.name = 'Lemonade';
         }
-        if (o.image === 'images/hero-product.png') {
+        if (o.image === 'images/hero-product.png' || o.image === 'images/dadgains-pouch-hero.svg') {
           migrated = true;
-          o.image = 'images/dadgains-pouch-hero.svg';
+          o.image = 'images/dadgains-pack-lemonade.png';
         }
         return o;
       });
@@ -55,7 +55,7 @@
         name,
         price: Number(price),
         qty: item.qty || 1,
-        image: image || 'images/dadgains-pouch-hero.svg',
+        image: image || 'images/dadgains-pack-lemonade.png',
       });
     }
     setCart(cart);
