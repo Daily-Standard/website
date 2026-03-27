@@ -1,7 +1,7 @@
 /* ============================================
    DAD GAINS — Brand Styles
-   Inspired by rugged streetwear (dadgang.co): dark nav, cream body,
-   neon yellow accent, olive secondary. Logo: DAD / line / GAINS (Bebas Neue).
+   Light-first: cream page, soft nav, olive + yellow accents.
+   Logo: DAD / line / GAINS (Bebas Neue).
    ============================================ */
 
 :root {
@@ -124,14 +124,14 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--dg-dark);
-  color: rgba(245, 240, 232, 0.92);
+  background: var(--dg-cream-deep);
+  color: #5c574f;
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-align: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: var(--border-hairline);
 }
 
 .announce-bar strong,
@@ -149,10 +149,10 @@ img {
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgba(26, 26, 26, 0.96);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: var(--border-hairline);
 }
 
 .nav-inner {
@@ -168,7 +168,7 @@ img {
   font-size: 20px;
   font-weight: 700;
   letter-spacing: 0.08em;
-  color: var(--dg-cream);
+  color: var(--dg-charcoal);
 }
 
 /* Dad Gains wordmark — DAD / rule / GAINS (matches logo sheet) */
@@ -182,7 +182,7 @@ img {
   font-weight: 400;
   letter-spacing: 0.22em;
   line-height: 1;
-  color: #fff;
+  color: var(--dg-charcoal);
   text-transform: uppercase;
 }
 
@@ -217,24 +217,24 @@ img {
 .nav-link {
   font-size: 14px;
   font-weight: 500;
-  color: #b8b3ab;
+  color: #6b6560;
   transition: color 0.2s ease;
 }
 
 .nav-link:hover {
-  color: #fff;
+  color: var(--dg-olive);
 }
 
 .nav-bag {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #b8b3ab;
+  color: #6b6560;
   transition: color 0.2s ease;
 }
 
 .nav-bag:hover {
-  color: #fff;
+  color: var(--dg-charcoal);
 }
 
 .nav-bag-icon {
@@ -262,8 +262,9 @@ img {
 
 .hero {
   padding: calc(120px + var(--announce-bar-height)) 28px 96px;
-  background: var(--dg-dark);
-  color: var(--dg-cream);
+  background: var(--dg-cream);
+  color: var(--dg-charcoal);
+  border-bottom: var(--border-hairline);
 }
 
 .hero-inner {
@@ -280,7 +281,7 @@ img {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: var(--dg-yellow);
+  color: var(--dg-olive);
   margin-bottom: 14px;
 }
 
@@ -288,14 +289,14 @@ img {
   font-size: 15px;
   font-weight: 500;
   line-height: 1.5;
-  color: rgba(245, 240, 232, 0.72);
+  color: #6b6560;
   margin-bottom: 22px;
   max-width: 34rem;
   letter-spacing: -0.01em;
 }
 
 .hero-audience-strap strong {
-  color: rgba(245, 240, 232, 0.95);
+  color: var(--dg-charcoal);
   font-weight: 600;
 }
 
@@ -327,14 +328,14 @@ img {
   font-size: clamp(2rem, 4vw, 2.85rem);
   font-weight: 600;
   margin-bottom: 22px;
-  color: #fff;
+  color: var(--dg-charcoal);
   letter-spacing: -0.03em;
   line-height: 1.12;
 }
 
 .hero-sub {
   font-size: 17px;
-  color: rgba(200, 195, 187, 0.95);
+  color: #5c574f;
   line-height: 1.65;
   margin-bottom: 32px;
   max-width: 32rem;
@@ -371,13 +372,66 @@ img {
 .hero-note {
   margin-top: 12px;
   font-size: 13px;
-  color: #A8A29E;
+  color: var(--dg-muted);
 }
 
 .hero-product {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.hero-product-link {
+  display: block;
+  max-width: 100%;
+  text-decoration: none;
+  color: inherit;
+  border-radius: calc(var(--radius) + 6px);
+  outline-offset: 4px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hero-product-link:hover {
+  transform: translateY(-2px);
+}
+
+.hero-product-link:hover .hero-product-img,
+.hero-product-link:hover .hero-pour-illustration {
+  box-shadow: 0 28px 56px rgba(20, 20, 20, 0.1);
+}
+
+.hero-product-link:focus-visible {
+  outline: 2px solid var(--dg-olive);
+}
+
+.hero-product-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dg-olive);
+  letter-spacing: 0.02em;
+}
+
+.hero-product-cta-arrow {
+  transition: transform 0.2s ease;
+}
+
+.hero-product-link:hover .hero-product-cta-arrow {
+  transform: translateX(4px);
+}
+
+.hero-product-link .hero-product-cta-text {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(74, 103, 65, 0.35);
+}
+
+.hero-product-link:hover .hero-product-cta-text {
+  text-decoration-color: var(--dg-olive);
 }
 
 .hero-media {
@@ -408,7 +462,7 @@ img {
   border-radius: var(--radius);
   margin: 0 auto;
   box-shadow: var(--shadow-product);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(44, 44, 44, 0.08);
 }
 
 .hero-product-img--render {
@@ -431,7 +485,7 @@ img {
   display: block;
   border-radius: var(--radius);
   box-shadow: var(--shadow-product);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(44, 44, 44, 0.08);
   object-fit: contain;
 }
 
@@ -439,7 +493,7 @@ img {
   margin-top: 14px;
   font-size: 12px;
   line-height: 1.45;
-  color: rgba(200, 195, 187, 0.75);
+  color: #8a8580;
   text-align: center;
   max-width: 280px;
   margin-left: auto;
@@ -451,8 +505,8 @@ img {
   font-size: 11px;
   padding: 2px 6px;
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(245, 240, 232, 0.9);
+  background: rgba(44, 44, 44, 0.06);
+  color: #5c574f;
 }
 
 /* Real pour video: add <video class="hero-pour-video"> next to pouch when pour.mp4 exists */
@@ -471,13 +525,13 @@ img {
   text-align: center;
   font-size: 13px;
   font-weight: 500;
-  color: rgba(245, 240, 232, 0.55);
+  color: #8a8580;
   margin-top: 28px;
   letter-spacing: 0.06em;
 }
 
 .stats-promo strong {
-  color: var(--dg-yellow);
+  color: var(--dg-olive);
   font-weight: 600;
 }
 
@@ -485,9 +539,9 @@ img {
 
 .stats {
   padding: 52px 0 48px;
-  background: var(--dg-charcoal);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: #fff;
+  border-top: var(--border-hairline);
+  border-bottom: var(--border-hairline);
 }
 
 .stats-inner {
@@ -505,7 +559,7 @@ img {
   display: block;
   font-size: clamp(1.75rem, 3vw, 2.25rem);
   font-weight: 700;
-  color: var(--dg-yellow);
+  color: var(--dg-olive);
   line-height: 1.1;
   letter-spacing: -0.02em;
 }
@@ -514,7 +568,7 @@ img {
   display: block;
   font-size: 11px;
   font-weight: 600;
-  color: rgba(184, 179, 171, 0.9);
+  color: #8a8580;
   text-transform: uppercase;
   letter-spacing: 0.14em;
   margin-top: 6px;
@@ -559,8 +613,8 @@ img {
 
 .problem {
   padding: 96px 0;
-  background: #2C2C2C;
-  color: #F5F2ED;
+  background: var(--dg-cream-deep);
+  color: var(--dg-charcoal);
 }
 
 .problem-inner {
@@ -578,12 +632,12 @@ img {
 .problem p {
   font-size: 18px;
   line-height: 1.7;
-  color: #C8C3BB;
+  color: #5c574f;
   margin-bottom: 16px;
 }
 
 .problem-kicker {
-  color: #F5F2ED !important;
+  color: var(--dg-charcoal) !important;
   font-weight: 600;
   font-size: 20px !important;
   margin-top: 32px;
@@ -792,8 +846,9 @@ img {
 
 .join {
   padding: 96px 0;
-  background: #2C2C2C;
-  color: #F5F2ED;
+  background: #fff;
+  color: var(--dg-charcoal);
+  border-top: var(--border-hairline);
 }
 
 .join-inner {
@@ -807,7 +862,7 @@ img {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: var(--dg-yellow);
+  color: var(--dg-olive);
   margin-bottom: 16px;
 }
 
@@ -821,7 +876,7 @@ img {
 
 .join > .container > .join-inner > p {
   font-size: 17px;
-  color: #C8C3BB;
+  color: #6b6560;
   line-height: 1.6;
   margin-bottom: 32px;
 }
@@ -838,20 +893,20 @@ img {
   padding: 16px 18px;
   font-family: "DM Sans", sans-serif;
   font-size: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: var(--border-hairline);
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.08);
-  color: #F5F2ED;
+  background: var(--dg-cream);
+  color: var(--dg-charcoal);
   outline: none;
   transition: border-color 0.2s ease;
 }
 
 .join-form input:focus {
-  border-color: var(--dg-yellow);
+  border-color: var(--dg-olive);
 }
 
 .join-form input::placeholder {
-  color: #888;
+  color: #a8a29e;
 }
 
 .join-form .btn {
@@ -867,7 +922,7 @@ img {
 
 .join-note {
   font-size: 13px;
-  color: #888;
+  color: var(--dg-muted);
   margin-top: 12px;
 }
 
@@ -875,8 +930,9 @@ img {
 
 .footer {
   padding: 60px 0 40px;
-  background: #1A1A1A;
-  color: #888;
+  background: var(--dg-cream-deep);
+  color: #6b6560;
+  border-top: var(--border-hairline);
 }
 
 .footer-inner {
@@ -892,9 +948,18 @@ img {
 .footer-logo {
   font-size: 20px;
   font-weight: 700;
-  color: #F5F2ED;
+  color: var(--dg-charcoal);
   letter-spacing: 0.08em;
   margin-bottom: 6px;
+}
+
+.footer .footer-logo--dadgains.nav-logo--dadgains,
+.footer .footer-logo--dadgains.nav-logo--dadgains .nav-logo-line {
+  color: var(--dg-charcoal);
+}
+
+.footer .footer-logo--dadgains.nav-logo--dadgains .nav-logo-rule {
+  background: var(--dg-olive);
 }
 
 .footer-logo.footer-logo--dadgains {
@@ -904,7 +969,7 @@ img {
 .footer-tagline {
   font-size: 14px;
   font-style: italic;
-  color: #777;
+  color: #8a8580;
 }
 
 .footer-links {
@@ -923,18 +988,18 @@ img {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #999;
+  color: #8a8580;
   margin-bottom: 4px;
 }
 
 .footer-col a {
   font-size: 14px;
-  color: #888;
+  color: #6b6560;
   transition: color 0.2s ease;
 }
 
 .footer-col a:hover {
-  color: #F5F2ED;
+  color: var(--dg-olive);
 }
 
 .footer-social {
@@ -944,28 +1009,29 @@ img {
 }
 
 .footer-social a {
-  color: #888;
+  color: #6b6560;
   transition: color 0.2s ease;
 }
 
 .footer-social a:hover {
-  color: #F5F2ED;
+  color: var(--dg-charcoal);
 }
 
 .footer-bottom {
-  border-top: 1px solid #333;
+  border-top: var(--border-hairline);
   padding-top: 24px;
 }
 
 .footer-copy {
   font-size: 13px;
   margin-bottom: 8px;
+  color: var(--dg-charcoal);
 }
 
 .footer-legal {
   font-size: 11px;
   line-height: 1.5;
-  color: #666;
+  color: #8a8580;
   max-width: 600px;
 }
 
