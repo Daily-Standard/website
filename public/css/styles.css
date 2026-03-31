@@ -443,12 +443,17 @@ img {
 }
 
 @media (min-width: 900px) {
-  .hero-media {
+  .hero-media:not(.hero-media--single) {
     grid-template-columns: 1fr 1fr;
     max-width: 960px;
     align-items: start;
     gap: 32px;
   }
+}
+
+.hero-media--single {
+  max-width: 480px;
+  margin: 0 auto;
 }
 
 .hero-product-picture {
@@ -574,6 +579,19 @@ img {
   margin-top: 6px;
 }
 
+.stats-product-line {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b6560;
+  margin-top: 28px;
+  letter-spacing: 0.02em;
+  max-width: 36rem;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+}
+
 /* ---- TRUST BAR ---- */
 
 .trust {
@@ -613,8 +631,8 @@ img {
 
 .problem {
   padding: 96px 0;
-  background: var(--dg-cream-deep);
-  color: var(--dg-charcoal);
+  background: #2c2c2c;
+  color: #f5f2ed;
 }
 
 .problem-inner {
@@ -623,24 +641,25 @@ img {
   text-align: center;
 }
 
-.problem h2 {
-  font-size: 36px;
-  font-weight: 700;
-  margin-bottom: 24px;
-}
-
 .problem p {
   font-size: 18px;
   line-height: 1.7;
-  color: #5c574f;
+  color: #c8c3bb;
   margin-bottom: 16px;
 }
 
+.problem-lead {
+  font-size: 20px;
+  font-weight: 600;
+  color: #f5f2ed !important;
+  margin-bottom: 20px !important;
+}
+
 .problem-kicker {
-  color: var(--dg-charcoal) !important;
+  color: #f5f2ed !important;
   font-weight: 600;
   font-size: 20px !important;
-  margin-top: 32px;
+  margin-top: 28px !important;
 }
 
 /* ---- INGREDIENTS ---- */
@@ -795,6 +814,56 @@ img {
   margin: 0 auto;
 }
 
+.story-inner--split {
+  max-width: 1000px;
+}
+
+.story-header-block {
+  text-align: center;
+  max-width: 40rem;
+  margin: 0 auto 40px;
+}
+
+.story-header-block .story-label {
+  text-align: center;
+}
+
+.story-header-block h2 {
+  margin-bottom: 0;
+}
+
+.story-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+  text-align: left;
+}
+
+.story-founders-photo {
+  margin: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  border: var(--border-hairline);
+}
+
+.story-founders-photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.story-body {
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .story-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
 .story-label {
   font-size: 13px;
   font-weight: 600;
@@ -817,22 +886,6 @@ img {
   line-height: 1.75;
   color: #4A4A4A;
   margin-bottom: 16px;
-}
-
-.story-text p:nth-child(2) {
-  font-weight: 600;
-  font-size: 20px;
-  color: #2C2C2C;
-  margin-top: 24px;
-  margin-bottom: 24px;
-}
-
-.story-text p:nth-child(5) {
-  font-weight: 600;
-  font-size: 20px;
-  color: #2C2C2C;
-  margin-top: 24px;
-  margin-bottom: 24px;
 }
 
 .story-sign {
@@ -862,7 +915,7 @@ img {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: var(--dg-olive);
+  color: var(--dg-yellow);
   margin-bottom: 16px;
 }
 
@@ -872,11 +925,12 @@ img {
   margin-bottom: 16px;
   letter-spacing: -0.03em;
   line-height: 1.2;
+  color: #f5f2ed;
 }
 
 .join > .container > .join-inner > p {
   font-size: 17px;
-  color: #6b6560;
+  color: #c8c3bb;
   line-height: 1.6;
   margin-bottom: 32px;
 }
@@ -893,20 +947,20 @@ img {
   padding: 16px 18px;
   font-family: "DM Sans", sans-serif;
   font-size: 15px;
-  border: var(--border-hairline);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius-sm);
-  background: var(--dg-cream);
-  color: var(--dg-charcoal);
+  background: rgba(255, 255, 255, 0.08);
+  color: #f5f2ed;
   outline: none;
   transition: border-color 0.2s ease;
 }
 
 .join-form input:focus {
-  border-color: var(--dg-olive);
+  border-color: var(--dg-yellow);
 }
 
 .join-form input::placeholder {
-  color: #a8a29e;
+  color: #888;
 }
 
 .join-form .btn {
@@ -922,7 +976,7 @@ img {
 
 .join-note {
   font-size: 13px;
-  color: var(--dg-muted);
+  color: #888;
   margin-top: 12px;
 }
 
@@ -1102,8 +1156,8 @@ img {
     display: none;
   }
 
-  .problem h2 {
-    font-size: 28px;
+  .problem-lead {
+    font-size: 18px !important;
   }
 
   .problem p {
