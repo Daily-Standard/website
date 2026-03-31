@@ -101,6 +101,18 @@ img {
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.45) inset, 0 8px 24px rgba(232, 224, 23, 0.25);
 }
 
+.btn--olive {
+  background: var(--dg-olive);
+  color: #f5f2ed;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25) inset;
+}
+
+.btn--olive:hover {
+  background: #3d5536;
+  color: #fefdf8;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset, 0 8px 22px rgba(74, 103, 65, 0.35);
+}
+
 .btn-sm {
   padding: 10px 22px;
   font-size: 14px;
@@ -119,8 +131,8 @@ img {
   left: 0;
   right: 0;
   z-index: 102;
-  min-height: var(--announce-bar-height);
-  padding: 9px 20px;
+  min-height: calc(var(--announce-bar-height) - 6px);
+  padding: 6px 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -261,7 +273,7 @@ img {
 /* ---- HERO ---- */
 
 .hero {
-  padding: calc(120px + var(--announce-bar-height)) 28px 96px;
+  padding: calc(88px + var(--announce-bar-height)) 28px 96px;
   background: var(--dg-cream);
   color: var(--dg-charcoal);
   border-bottom: var(--border-hairline);
