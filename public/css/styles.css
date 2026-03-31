@@ -274,7 +274,7 @@ img {
 /* ---- HERO ---- */
 
 .hero {
-  padding: calc(88px + var(--announce-bar-height)) 28px 96px;
+  padding: calc(104px + var(--announce-bar-height)) 28px 96px;
   background: var(--dg-cream);
   color: var(--dg-charcoal);
   border-bottom: var(--border-hairline);
@@ -847,8 +847,8 @@ img {
 
 .story-layout {
   display: grid;
-  grid-template-columns: 0.9fr 1.2fr 0.9fr;
-  gap: 40px;
+  grid-template-columns: 0.8fr 1.8fr 0.8fr;
+  gap: 36px;
   align-items: start;
   text-align: left;
 }
@@ -869,6 +869,9 @@ img {
 
 .story-body {
   min-width: 0;
+  max-width: 36rem;
+  margin: 0 auto;
+  text-align: center;
 }
 
 @media (max-width: 900px) {
