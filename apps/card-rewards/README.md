@@ -23,7 +23,7 @@ It must be served over http(s); opening `index.html` directly from disk won't lo
 
 | Path | Purpose |
 |---|---|
-| `js/data/cards.js` | Card catalog: earning rules, fees, credits (21 popular US cards) |
+| `js/data/cards.js` | Card catalog: earning rules, fees, credits (22 popular US cards) |
 | `js/data/merchants.js` | ~50 common merchants, their usual category and quirks |
 | `js/engine.js` | Ranking, benefit periods, usage summaries, calendar export (no DOM; unit-tested) |
 | `js/app.js` | The interface (Pay, Benefits, Wallet tabs) |
@@ -32,13 +32,18 @@ It must be served over http(s); opening `index.html` directly from disk won't lo
 
 ## Card data accuracy
 
-The card data was written from public issuer information as of 2026-11-16 and **has not been checked line-by-line against live issuer pages**. Issuers change rates and credits often (Chase Sapphire Reserve and Amex Platinum were overhauled in 2025). Before relying on it, verify each card against its issuer page (linked in the app and in `cards.js`). Users can untick credits and add their own credits or custom cards to correct gaps.
+The card data was written from public issuer information and cross-checked on 2026-11-16 against search results (issuer pages, Doctor of Credit, NerdWallet, TPG and similar). The checks and their sources are in `docs/research/card-rewards-app/06-*` and `07-*`. Issuer pages could not be opened directly, so it **has not been checked line-by-line against live issuer pages**. Issuers change rates and credits often (Chase Sapphire Reserve and Amex Platinum were overhauled in 2025). Before relying on it, verify each card against its issuer page (linked in the app and in `cards.js`). Users can untick credits and add their own credits or custom cards to correct gaps.
 
-Rotating 5% categories are filled in only for Chase Freedom Flex Q4 2026. Discover and future quarters must be set in the Wallet tab (or added to `quarters` in `cards.js`).
+Rotating 5% categories are filled in for Chase Freedom Flex (Q4 2026, Q1 2027) and Discover it (Q4 2026). Later quarters must be set in the Wallet tab or added to `quarters` in `cards.js`.
+
+Left out on purpose because sources disagreed: a possible 7% total on Freedom Flex Q4 dining, a Capital One Venture hotel credit that may still be rolling out, the Altitude Go streaming credit, and Citi Custom Cash's Citi Travel bonus. Sapphire Reserve's one-off 2026 select-hotels credit was skipped because it expires at year end.
 
 Point values (e.g. 1.25¢ per Chase point when you hold a Sapphire card) are editable estimates, not facts.
 
-## Not built yet (ideas from the research)
+## Not built yet
+
+See `docs/research/card-rewards-app/05-build-roadmap.md` for the build plan, costs and vendor choices for each.
+
 
 - Nearby stores via location (needs a maps/places API)
 - Household sharing between two people (needs accounts and a backend)

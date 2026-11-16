@@ -1,8 +1,10 @@
 // Card catalog: earning rules and credits for popular US rewards cards.
 //
 // IMPORTANT: rates, fees and credits change often. This data was written from
-// public issuer information as understood on DATA_AS_OF and has NOT been
-// checked line-by-line against live issuer pages. Every card links to its
+// public issuer information and cross-checked on DATA_AS_OF against search
+// results (issuer pages, Doctor of Credit, NerdWallet, TPG and similar; see
+// docs/research/card-rewards-app/06-* and 07-*). Issuer pages could not be
+// opened directly, so it has NOT been checked line-by-line against them. Every card links to its
 // issuer page; confirm there before relying on a number. Users can add their
 // own credits and custom cards in the app to correct or extend this list.
 
@@ -38,7 +40,7 @@ export const CURRENCIES = {
   chase_ur: { name: 'Chase Ultimate Rewards', defaultCents: 1.0, boostedCents: 1.25, boostedBy: ['chase_sapphire_preferred', 'chase_sapphire_reserve'] },
   amex_mr: { name: 'Amex Membership Rewards', defaultCents: 1.25 },
   c1_miles: { name: 'Capital One Miles', defaultCents: 1.25 },
-  citi_ty: { name: 'Citi ThankYou Points', defaultCents: 1.0, boostedCents: 1.25, boostedBy: ['citi_strata_premier'] },
+  citi_ty: { name: 'Citi ThankYou Points', defaultCents: 1.0, boostedCents: 1.25, boostedBy: ['citi_strata_premier', 'citi_strata_elite'] },
   wf_points: { name: 'Wells Fargo Rewards', defaultCents: 1.0 },
   usb_points: { name: 'U.S. Bank Points', defaultCents: 1.0 },
   amazon_points: { name: 'Amazon Rewards', defaultCents: 1.0 },
@@ -72,11 +74,14 @@ export const CARDS = [
       { rate: 3, categories: ['dining'] },
       { rate: 3, categories: ['streaming'], note: 'select streaming services' },
       { rate: 3, categories: ['groceries'], condition: 'online grocery purchases only (not Target, Walmart or wholesale clubs)' },
+      { rate: 3, categories: ['gas'], note: 'gas stations and EV charging' },
+      { rate: 3, merchants: ['airbnb'], note: 'vacation rentals booked directly' },
+      { rate: 5, merchants: ['lyft'], note: 'Lyft promo through Sept 30, 2027' },
       { rate: 2, categories: ['flights', 'hotels', 'travel', 'transit'] },
       { rate: 5, categories: ['flights', 'hotels', 'travel'], condition: 'booked through Chase Travel' },
     ],
     credits: [
-      { id: 'hotel', name: 'Chase Travel hotel credit', amount: 50, cadence: 'cardmember_year', note: 'Hotel stays booked through Chase Travel' },
+      { id: 'hotel', name: 'Chase Travel hotel credit', amount: 100, cadence: 'cardmember_year', note: 'Hotel stays booked through Chase Travel' },
     ],
   },
   {
@@ -92,15 +97,16 @@ export const CARDS = [
       { rate: 3, categories: ['dining'] },
       { rate: 4, categories: ['flights', 'hotels'], note: 'booked directly with the airline or hotel' },
       { rate: 1, categories: ['travel', 'transit'] },
+      { rate: 5, merchants: ['lyft'], note: 'Lyft promo through Sept 30, 2027' },
       { rate: 8, categories: ['flights', 'hotels', 'travel'], condition: 'booked through Chase Travel' },
     ],
     credits: [
       { id: 'travel', name: 'Annual travel credit', amount: 300, cadence: 'cardmember_year', note: 'Applies automatically to travel purchases' },
-      { id: 'edit', name: 'The Edit hotel credit', amount: 250, cadence: 'semiannual', note: 'Prepaid 2+ night stays booked through The Edit by Chase Travel' },
+      { id: 'edit', name: 'The Edit hotel credit', amount: 500, cadence: 'annual', note: 'Up to $250 on each of two prepaid 2+ night stays booked through The Edit by Chase Travel' },
       { id: 'dining', name: 'Sapphire Reserve Exclusive Tables dining credit', amount: 150, cadence: 'semiannual', note: 'Participating restaurants via OpenTable' },
       { id: 'stubhub', name: 'StubHub / viagogo credit', amount: 150, cadence: 'semiannual', note: 'Requires activation' },
-      { id: 'apple', name: 'Apple TV+ and Apple Music', amount: 250, cadence: 'annual', note: 'Complimentary subscriptions; requires activation' },
-      { id: 'doordash', name: 'DoorDash promos', amount: 25, cadence: 'monthly', note: '$5 restaurant + two $10 non-restaurant promos with DashPass' },
+      { id: 'apple', name: 'Apple TV+ and Apple Music', amount: 250, cadence: 'annual', note: 'Complimentary subscriptions; requires activation (sources value it at $250-$288)' },
+      { id: 'doordash', name: 'DoorDash promos', amount: 35, cadence: 'monthly', note: '$15 promo on any eligible order + two $10 non-restaurant promos, with DashPass' },
       { id: 'lyft', name: 'Lyft in-app credit', amount: 10, cadence: 'monthly' },
       { id: 'peloton', name: 'Peloton membership credit', amount: 10, cadence: 'monthly', note: 'Requires activation' },
     ],
@@ -135,8 +141,11 @@ export const CARDS = [
         rotating: true,
         cap: 'Up to $1,500 in combined purchases per quarter; activate each quarter',
         // Q4 2026 per Chase's announcement (media.chase.com). Confirm each quarter.
-        quarters: { '2026-Q4': ['groceries', 'dining'] },
-        quarterNotes: { '2026-Q4': 'Grocery stores (not Walmart or Target), restaurants, American Red Cross' },
+        quarters: { '2026-Q4': ['groceries', 'dining'], '2027-Q1': ['groceries', 'streaming'] },
+        quarterNotes: {
+          '2026-Q4': 'Grocery stores (not Walmart or Target), restaurants, American Red Cross',
+          '2027-Q1': 'Grocery stores and select streaming services',
+        },
       },
       { rate: 3, categories: ['dining', 'drugstores'] },
       { rate: 5, categories: ['flights', 'hotels', 'travel'], condition: 'booked through Chase Travel' },
@@ -174,14 +183,14 @@ export const CARDS = [
       { rate: 5, categories: ['hotels'], condition: 'prepaid hotels booked via Amex Travel' },
     ],
     credits: [
-      { id: 'hotel', name: 'Hotel credit (Fine Hotels + Resorts / Hotel Collection)', amount: 300, cadence: 'semiannual', note: 'Prepaid bookings via Amex Travel' },
+      { id: 'hotel', name: 'Lodging credit (Fine Hotels + Resorts / Hotel Collection / Airbnb Luxe)', amount: 300, cadence: 'semiannual', note: 'Prepaid bookings via Amex Travel; 2-night minimum for Fine Hotels + Resorts from Jan 1, 2027' },
       { id: 'resy', name: 'Resy restaurant credit', amount: 100, cadence: 'quarterly', note: 'Enrollment required' },
       { id: 'lululemon', name: 'lululemon credit', amount: 75, cadence: 'quarterly', note: 'U.S. lululemon stores and online; enrollment required' },
-      { id: 'digital', name: 'Digital entertainment credit', amount: 25, cadence: 'monthly', note: 'Select streaming/news services; enrollment required' },
+      { id: 'digital', name: 'Digital entertainment credit', amount: 25, cadence: 'monthly', note: 'Select streaming/news services (Peacock bundles no longer qualify since Aug 1, 2026); enrollment required' },
       { id: 'uber', name: 'Uber Cash', amount: 15, cadence: 'monthly', monthOverrides: { 12: 35 }, note: '$15/month plus an extra $20 in December; card must be in Uber app' },
       { id: 'airline', name: 'Airline fee credit', amount: 200, cadence: 'annual', note: 'Incidental fees on one selected airline' },
       { id: 'uber_one', name: 'Uber One membership credit', amount: 120, cadence: 'annual' },
-      { id: 'clear', name: 'CLEAR+ credit', amount: 209, cadence: 'annual' },
+      { id: 'clear', name: 'CLEAR+ credit', amount: 219, cadence: 'annual' },
       { id: 'walmart', name: 'Walmart+ membership credit', amount: 12.95, cadence: 'monthly', note: 'Covers a monthly Walmart+ membership' },
       { id: 'oura', name: 'Oura Ring credit', amount: 200, cadence: 'annual', note: 'Enrollment required' },
       { id: 'equinox', name: 'Equinox credit', amount: 300, cadence: 'annual', note: 'Enrollment required' },
@@ -200,9 +209,10 @@ export const CARDS = [
       { rate: 4, categories: ['dining'], cap: 'Up to $50,000 per year, then 1x' },
       { rate: 4, categories: ['groceries'], note: 'U.S. supermarkets', cap: 'Up to $25,000 per year, then 1x' },
       { rate: 3, categories: ['flights'], note: 'booked directly with airlines or on amextravel.com' },
+      { rate: 5, categories: ['hotels'], condition: 'prepaid hotels booked on AmexTravel.com' },
     ],
     credits: [
-      { id: 'dining', name: 'Dining credit', amount: 10, cadence: 'monthly', note: 'Grubhub, The Cheesecake Factory, Goldbelly, Wine.com, Five Guys; enrollment required' },
+      { id: 'dining', name: 'Dining credit', amount: 10, cadence: 'monthly', note: 'Grubhub, The Cheesecake Factory, Five Guys, Buffalo Wild Wings, Wonder; enrollment required' },
       { id: 'uber', name: 'Uber Cash', amount: 10, cadence: 'monthly', note: 'Card must be in Uber app' },
       { id: 'resy', name: 'Resy credit', amount: 50, cadence: 'semiannual', note: 'Enrollment required' },
       { id: 'dunkin', name: "Dunkin' credit", amount: 7, cadence: 'monthly', note: 'Enrollment required' },
@@ -223,7 +233,9 @@ export const CARDS = [
       { rate: 3, categories: ['gas'], note: 'U.S. gas stations' },
       { rate: 3, categories: ['transit'] },
     ],
-    credits: [],
+    credits: [
+      { id: 'disney', name: 'Disney Streaming credit', amount: 10, cadence: 'monthly', note: 'Disney+, Hulu or ESPN bundle subscriptions; enrollment required' },
+    ],
   },
   {
     id: 'amex_blue_cash_everyday',
@@ -239,7 +251,10 @@ export const CARDS = [
       { rate: 3, categories: ['online', 'amazon'], note: 'U.S. online retail', cap: 'Up to $6,000 per year, then 1%' },
       { rate: 3, categories: ['gas'], note: 'U.S. gas stations', cap: 'Up to $6,000 per year, then 1%' },
     ],
-    credits: [],
+    credits: [
+      { id: 'disney', name: 'Disney Streaming credit', amount: 7, cadence: 'monthly', note: 'Disney+, Hulu or ESPN bundle subscriptions; enrollment required' },
+      { id: 'home_chef', name: 'Home Chef credit', amount: 15, cadence: 'monthly', note: 'Enrollment required' },
+    ],
   },
   {
     id: 'capital_one_venture_x',
@@ -252,7 +267,7 @@ export const CARDS = [
     url: 'https://www.capitalone.com/credit-cards/venture-x/',
     rules: [
       { rate: 10, categories: ['hotels', 'travel'], condition: 'hotels and rental cars booked through Capital One Travel' },
-      { rate: 5, categories: ['flights'], condition: 'booked through Capital One Travel' },
+      { rate: 5, categories: ['flights', 'travel'], condition: 'flights and vacation rentals booked through Capital One Travel' },
     ],
     credits: [
       { id: 'travel', name: 'Capital One Travel credit', amount: 300, cadence: 'cardmember_year', note: 'Bookings through Capital One Travel' },
@@ -276,7 +291,7 @@ export const CARDS = [
     id: 'capital_one_savor',
     name: 'Capital One Savor (no annual fee)',
     issuer: 'Capital One',
-    network: 'mastercard',
+    network: 'mastercard', // some new accounts are issued on the Discover network
     annualFee: 0,
     currency: 'cash',
     baseRate: 1,
@@ -284,7 +299,8 @@ export const CARDS = [
     rules: [
       { rate: 3, categories: ['dining', 'entertainment', 'streaming'] },
       { rate: 3, categories: ['groceries'], note: 'excludes superstores like Walmart and Target' },
-      { rate: 5, categories: ['hotels', 'travel'], condition: 'hotels and rental cars booked through Capital One Travel' },
+      { rate: 8, categories: ['entertainment'], condition: 'Capital One Entertainment purchases' },
+      { rate: 5, categories: ['hotels', 'travel'], condition: 'hotels, vacation rentals and rental cars booked through Capital One Travel' },
     ],
     credits: [],
   },
@@ -302,7 +318,8 @@ export const CARDS = [
         rate: 5,
         rotating: true,
         cap: 'Up to $1,500 in purchases per quarter; activate each quarter',
-        quarters: {}, // Not filled in: set this quarter's categories in Wallet.
+        quarters: { '2026-Q4': ['dining', 'entertainment'] },
+        quarterNotes: { '2026-Q4': 'Restaurants, entertainment, utilities' },
       },
     ],
     credits: [],
@@ -316,12 +333,15 @@ export const CARDS = [
     currency: 'citi_ty',
     baseRate: 2,
     url: 'https://www.citi.com/credit-cards/citi-double-cash-credit-card',
-    rules: [],
+    rules: [
+      { rate: 5, categories: ['hotels', 'travel'], condition: 'hotels, car rentals and attractions booked on Citi Travel (reported permanent in 2025; verify)' },
+    ],
     credits: [],
   },
   {
     id: 'citi_custom_cash',
     name: 'Citi Custom Cash',
+    // Closed to new applicants since May 28, 2026; existing cardholders keep these terms.
     issuer: 'Citi',
     network: 'mastercard',
     annualFee: 0,
@@ -331,7 +351,7 @@ export const CARDS = [
     rules: [
       {
         rate: 5,
-        topCategory: ['dining', 'groceries', 'gas', 'travel', 'transit', 'streaming', 'drugstores', 'home_improvement', 'entertainment'],
+        topCategory: ['dining', 'groceries', 'gas', 'flights', 'hotels', 'travel', 'transit', 'streaming', 'drugstores', 'home_improvement', 'entertainment'],
         cap: 'Only your single top eligible category each billing cycle, up to $500 spent',
       },
     ],
@@ -355,6 +375,27 @@ export const CARDS = [
     ],
   },
   {
+    id: 'citi_strata_elite',
+    name: 'Citi Strata Elite',
+    issuer: 'Citi',
+    network: 'mastercard', // not confirmed by a source in research; verify
+    annualFee: 595,
+    currency: 'citi_ty',
+    baseRate: 1.5,
+    url: 'https://www.citi.com/credit-cards/citi-strata-elite-credit-card',
+    rules: [
+      { rate: 3, categories: ['dining'] },
+      { rate: 6, categories: ['dining'], condition: 'Friday and Saturday 6pm-6am ET ("Citi Nights")' },
+      { rate: 12, categories: ['hotels', 'travel'], condition: 'hotels, car rentals and attractions booked on Citi Travel' },
+      { rate: 6, categories: ['flights'], condition: 'booked on Citi Travel' },
+    ],
+    credits: [
+      { id: 'hotel', name: 'Hotel credit', amount: 300, cadence: 'annual', note: '2+ night stays booked on Citi Travel' },
+      { id: 'splurge', name: 'Splurge credit', amount: 200, cadence: 'annual', note: 'Up to two of: 1stDibs, American Airlines, Best Buy, Future Personal Training, Live Nation' },
+      { id: 'blacklane', name: 'Blacklane credit', amount: 100, cadence: 'semiannual' },
+    ],
+  },
+  {
     id: 'citi_costco',
     name: 'Costco Anywhere Visa (Citi)',
     issuer: 'Citi',
@@ -367,7 +408,7 @@ export const CARDS = [
       { rate: 5, merchants: ['costco_gas'], note: 'gas at Costco', cap: '4%/5% gas combined up to $7,000 per year, then 1%' },
       { rate: 4, categories: ['gas'], cap: 'Gas combined up to $7,000 per year, then 1%' },
       { rate: 3, categories: ['dining', 'flights', 'hotels', 'travel'] },
-      { rate: 2, merchants: ['costco'] },
+      { rate: 2, merchants: ['costco', 'costco_online'] },
     ],
     credits: [],
   },
@@ -410,6 +451,7 @@ export const CARDS = [
       {
         rate: 3,
         choice: ['gas', 'online', 'dining', 'travel', 'drugstores', 'home_improvement'],
+        // 'online' also covers cable, streaming, internet and phone plans.
         defaultChoice: 'gas',
         cap: '3% and 2% categories share $2,500 in purchases per quarter, then 1%',
       },
@@ -427,7 +469,7 @@ export const CARDS = [
     baseRate: 1,
     url: 'https://www.usbank.com/credit-cards/altitude-go-visa-signature-credit-card.html',
     rules: [
-      { rate: 4, categories: ['dining'], note: 'includes takeout and delivery' },
+      { rate: 4, categories: ['dining'], note: 'includes takeout and delivery', cap: 'Up to $2,000 per quarter, then 1x' },
       { rate: 2, categories: ['groceries', 'gas', 'streaming'] },
     ],
     credits: [],

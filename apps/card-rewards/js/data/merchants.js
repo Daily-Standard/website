@@ -7,6 +7,7 @@
 
 export const MERCHANTS = [
   { id: 'costco', name: 'Costco', category: 'wholesale', networks: ['visa'], note: 'U.S. warehouses take Visa only (plus debit). Most cards do not count Costco as grocery.' },
+  { id: 'costco_online', name: 'Costco.com', category: 'wholesale', networks: ['visa', 'mastercard'], note: 'Costco.com takes Visa and Mastercard; American Express is not accepted.' },
   { id: 'costco_gas', name: 'Costco Gas', category: 'gas', networks: ['visa'] },
   { id: 'sams_club', name: "Sam's Club", category: 'wholesale', note: 'Usually codes as a wholesale club, not grocery.' },
   { id: 'bjs', name: "BJ's Wholesale", category: 'wholesale' },

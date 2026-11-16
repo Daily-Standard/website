@@ -64,6 +64,12 @@ test('Costco: non-Visa cards are marked not accepted and ranked last', () => {
   assert.equal(results[0].rate, 2);
 });
 
+test('Sapphire Preferred: Lyft promo and gas', () => {
+  const card = getCard('chase_sapphire_preferred', {});
+  assert.equal(earningFor(card, {}, { category: 'transit', merchantId: 'lyft' }, NOV_16).rate, 5);
+  assert.equal(earningFor(card, {}, { category: 'gas' }, NOV_16).rate, 3);
+});
+
 test('Costco gas uses the merchant-specific 5% rule', () => {
   const card = getCard('citi_costco', {});
   assert.equal(earningFor(card, {}, { category: 'gas', merchantId: 'costco_gas' }, NOV_16).rate, 5);
@@ -81,9 +87,12 @@ test('rotating category needs activation', () => {
   assert.equal(activated.rate, 5);
   assert.equal(activated.warnings.length, 0);
 
-  // Next quarter has no categories in the data, so no bonus.
-  const jan = earningFor(card, { rotatingActivated: { '2027-Q1': true } }, { category: 'groceries' }, new Date(2027, 0, 10));
-  assert.equal(jan.rate, 1);
+  // Q1 2027: groceries and streaming; activation is per quarter.
+  const jan = new Date(2027, 0, 10);
+  assert.equal(earningFor(card, { rotatingActivated: { '2026-Q4': true } }, { category: 'groceries' }, jan).rate, 1);
+  assert.equal(earningFor(card, { rotatingActivated: { '2027-Q1': true } }, { category: 'streaming' }, jan).rate, 5);
+  // A quarter with no data falls back to the regular rates.
+  assert.equal(earningFor(card, { rotatingActivated: { '2027-Q2': true } }, { category: 'groceries' }, new Date(2027, 4, 1)).rate, 1);
 });
 
 test('user-set rotating categories (Discover)', () => {

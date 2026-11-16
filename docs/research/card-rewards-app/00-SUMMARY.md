@@ -8,6 +8,9 @@ Researched 2026-11-16. This file pulls together the four detailed reports in thi
 | [02-competitors.md](02-competitors.md) | ~25 competitors and adjacent tools, comparison table, shutdowns/acquisitions, international |
 | [03-technical.md](03-technical.md) | Card data, merchant category codes, bank linking, card-linked offers, iOS/Android limits, AI, compliance, architecture |
 | [04-market.md](04-market.md) | Market size, monetization economics, regulation, user pain points, go-to-market, risks |
+| [05-build-roadmap.md](05-build-roadmap.md) | Building the next features: hosting, push reminders, nearby stores, accounts/household sharing, bank linking, native app, card-data upkeep, payments; phased roadmap and running costs |
+| [06-card-data-check-chase-capitalone-others.md](06-card-data-check-chase-capitalone-others.md) | Check of the app's card data: Chase, Capital One, Discover, Wells Fargo, Bank of America, U.S. Bank |
+| [07-card-data-check-amex-citi.md](07-card-data-check-amex-citi.md) | Check of the app's card data: Amex and Citi, plus Costco acceptance |
 
 ## Read this first: research limits
 
