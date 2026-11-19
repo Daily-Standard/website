@@ -196,3 +196,63 @@ export function merchantsFromStatement(transactions) {
   }
   return [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([name, count]) => ({ name, count }));
 }
+
+// ---------- card offers ----------
+
+function compact(s) {
+  return String(s || '').toUpperCase().replace(/&/g, ' AND ').replace(/[^A-Z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+const GENERIC_WORDS = new Set(['THE', 'AND', 'STORE', 'STORES', 'SHOP', 'ONLINE', 'INC', 'LLC', 'CO', 'COM', 'WWW', 'OFFER', 'GET', 'SPEND']);
+
+/** Words that identify an offer's brand, e.g. "The Home Depot" -> ["HOME", "DEPOT"]. */
+function brandWords(name) {
+  return compact(name).split(' ').filter((w) => w.length >= 3 && !GENERIC_WORDS.has(w));
+}
+
+/**
+ * Parse the offer list copied from the browser extension.
+ * Returns { issuer, capturedAt, offers } or throws with a readable message.
+ */
+export function parseOfferList(text) {
+  let data;
+  try { data = JSON.parse(String(text).trim()); } catch { throw new Error('That doesn\'t look like an offer list. Use "Copy offer list for the app" in the extension.'); }
+  if (!data || data.source !== 'card-rewards-offer-helper' || !Array.isArray(data.offers)) {
+    throw new Error('That doesn\'t look like an offer list from the extension.');
+  }
+  const offers = data.offers
+    .filter((o) => o && typeof o.merchant === 'string' && o.merchant.trim())
+    .map((o) => ({ merchant: o.merchant.trim().slice(0, 80), text: String(o.text || '').slice(0, 300) }));
+  return { issuer: data.issuer === 'amex' || data.issuer === 'chase' ? data.issuer : 'other', capturedAt: data.capturedAt || null, offers };
+}
+
+/**
+ * Offers at brands you've bought from. `merchants` = { NAME: { count } } from statements.
+ * A match needs every brand word of the offer (up to the first two) to appear in a
+ * statement merchant name, so "Home Depot" matches "THE HOME DEPOT" but not "HOME GOODS".
+ */
+export function matchOffers(offersByIssuer, merchants) {
+  const merchantNames = Object.keys(merchants || {});
+  const out = [];
+  for (const [issuer, list] of Object.entries(offersByIssuer || {})) {
+    for (const offer of (list && list.offers) || []) {
+      const words = brandWords(offer.merchant).slice(0, 2);
+      if (!words.length) continue;
+      const hit = merchantNames.find((m) => {
+        const mw = compact(m).split(' ');
+        return words.every((w) => mw.some((x) => x === w || (w.length >= 5 && x.startsWith(w))));
+      });
+      if (hit) out.push({ issuer, offer, merchant: hit, count: merchants[hit].count || 1 });
+    }
+  }
+  return out.sort((a, b) => b.count - a.count);
+}
+
+/** Merge a statement's merchants into the saved tally. */
+export function mergeMerchants(saved, fromStatement) {
+  const next = { ...(saved || {}) };
+  for (const { name, count } of fromStatement) {
+    next[name] = { count: ((next[name] && next[name].count) || 0) + count };
+  }
+  return next;
+}

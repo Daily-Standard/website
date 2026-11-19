@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Card Rewards - Offer Helper",
+  "version": "0.1.0",
+  "description": "Personal helper: adds the Chase/Amex offers shown on the page you're on, and copies the offer list into the Card Rewards app.",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "action": {
+    "default_title": "Card offers",
+    "default_popup": "popup.html",
+    "default_icon": { "128": "icon-128.png" }
+  },
+  "icons": { "128": "icon-128.png" }
+}

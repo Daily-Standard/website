@@ -4,7 +4,7 @@ import {
   rankCards, getCard, pointValue, creditsFor, creditStatus, cardBenefitSummary,
   expiringSoon, usageKey, quarterKey, buildIcs, isPerk, annualFeeFor, setupChecklist,
 } from './engine.js';
-import { readStatement, suggestCredit, applyMatches } from './importer.js';
+import { readStatement, suggestCredit, applyMatches, merchantsFromStatement, mergeMerchants, parseOfferList, matchOffers } from './importer.js';
 import { loadState, saveState, normalize, emptyState } from './store.js';
 
 // ---------- state ----------
@@ -111,6 +111,7 @@ function renderPay() {
           <button class="btn ghost" data-action="clear-search">New search</button>
         </div>
         ${merchant && merchant.note ? `<p class="note">${esc(merchant.note)}</p>` : ''}
+        ${merchant ? matchOffers(state.offers, { [merchant.name.toUpperCase()]: { count: 1 } }).map((m) => `<p class="tip"><strong>${m.issuer === 'amex' ? 'Amex' : 'Chase'} offer:</strong> ${esc(m.offer.merchant)}${m.offer.text ? ` · ${esc(m.offer.text)}` : ''}. Use the card it was added to.</p>`).join('') : ''}
         ${best ? bestCardHtml(best) : ''}
         ${rest.length ? `
           <h3 class="section-label">Your other cards</h3>
@@ -219,6 +220,8 @@ function renderBenefits() {
         ${s.statuses.map((st) => creditRowHtml(s.entry, st, false)).join('')}
       </section>`).join('') : '<section class="panel"><p class="muted">None of your cards have credits in our list. You can add your own credits from the Wallet tab.</p></section>'}
 
+    ${offersHtml()}
+
     ${importHtml()}
 
     ${withCredits.length ? `
@@ -284,8 +287,31 @@ function setupHtml() {
     </section>`;
 }
 
+function offersHtml() {
+  const issuers = Object.entries(state.offers || {});
+  const matches = matchOffers(state.offers, state.merchants);
+  const haveMerchants = Object.keys(state.merchants || {}).length > 0;
+  const ISSUER = { amex: 'Amex', chase: 'Chase', other: 'Other' };
+  return `
+    <section class="panel">
+      <h3 class="section-label">Card offers</h3>
+      ${issuers.length ? `<p class="muted small">${issuers.map(([k, v]) => `${ISSUER[k] || k}: ${v.offers.length} offers (updated ${esc(new Date(v.capturedAt || Date.now()).toLocaleDateString())})`).join(' · ')}</p>` : '<p class="muted small">Use the Offer Helper browser extension on your computer to add all Amex and Chase offers, then copy the offer list and paste it here.</p>'}
+      ${matches.length ? `
+        <p class="sub-title">Offers at brands you've bought from (${matches.length})</p>
+        <ul class="mini-list">
+          ${matches.map((m) => `<li><span><strong>${esc(m.offer.merchant)}</strong> · ${esc(ISSUER[m.issuer] || m.issuer)}</span><span class="muted">${esc(m.offer.text || '')}</span><span class="muted">On your statements as ${esc(m.merchant)} (${m.count}×)</span></li>`).join('')}
+        </ul>`
+        : issuers.length ? `<p class="muted small">${haveMerchants ? 'None of your offers match brands on your imported statements.' : 'Import a statement below so the app can spot offers at brands you buy from.'}</p>` : ''}
+      <details>
+        <summary class="small">Paste offer list</summary>
+        <textarea id="offer-paste" rows="3" placeholder="Paste here after “Copy offer list for the app”" aria-label="Offer list"></textarea>
+        <button class="btn" data-action="offers-save">Save offers</button>
+      </details>
+    </section>`;
+}
+
 function importHtml() {
-  const cardsWithCredits = state.wallet.filter((e) => creditsFor(e, state).some((c) => !isPerk(c)));
+  const cardsWithCredits = state.wallet;
   if (!cardsWithCredits.length) return '';
   const r = ui.importReview;
   if (r) {
@@ -308,7 +334,7 @@ function importHtml() {
             </select>
           </div>`).join('') || '<p class="muted">Nothing new in this file.</p>'}
         <div class="row wrap">
-          ${fresh.length ? '<button class="btn primary" data-action="import-apply">Save</button>' : ''}
+          ${fresh.length || r.merchants.length ? '<button class="btn primary" data-action="import-apply">Save</button>' : ''}
           <button class="btn ghost" data-action="import-cancel">Cancel</button>
         </div>
       </section>`;
@@ -316,7 +342,7 @@ function importHtml() {
   return `
     <section class="panel">
       <h3 class="section-label">Import a statement</h3>
-      <p class="muted small">On chase.com or americanexpress.com, download your recent card activity as a CSV file, then pick it here. The app finds statement credits and ticks off the benefits they count toward. The file is read on this device only.</p>
+      <p class="muted small">On chase.com or americanexpress.com, download your recent card activity as a CSV file, then pick it here. The app finds statement credits and ticks off the benefits they count toward, and remembers which brands you buy from so it can spot card offers for them. The file is read on this device only.</p>
       <div class="row wrap">
         <select id="import-card" aria-label="Which card is this statement for?">
           ${cardsWithCredits.map((e) => `<option value="${e.cardId}">${esc(getCard(e.cardId, state).name)}</option>`).join('')}
@@ -575,6 +601,14 @@ app.addEventListener('click', (e) => {
     const v = Number(String(input).replace(/[$,\s]/g, ''));
     if (!Number.isFinite(v) || v < 0) { toast('Enter a dollar amount.'); return; }
     commit((s) => { if (v > 0) s.usage[el.dataset.key] = Math.min(v, max); else delete s.usage[el.dataset.key]; });
+  } else if (a === 'offers-save') {
+    try {
+      const list = parseOfferList(document.getElementById('offer-paste').value);
+      commit((s) => { s.offers = { ...(s.offers || {}), [list.issuer]: { capturedAt: list.capturedAt, offers: list.offers } }; });
+      toast(`Saved ${list.offers.length} ${list.issuer === 'amex' ? 'Amex' : list.issuer === 'chase' ? 'Chase' : ''} offers.`);
+    } catch (e) {
+      toast(e.message);
+    }
   } else if (a === 'open-card') {
     ui.openCard = el.dataset.id;
     setTab('wallet');
@@ -592,9 +626,13 @@ app.addEventListener('click', (e) => {
     const credits = creditsFor(entry, state);
     const fresh = r.lines.filter((l) => !l.already);
     const matched = fresh.filter((l) => l.creditId).length;
-    commit((s) => Object.assign(s, applyMatches(s, entry, credits, fresh)));
+    commit((s) => {
+      Object.assign(s, applyMatches(s, entry, credits, fresh));
+      s.merchants = mergeMerchants(s.merchants, r.merchants);
+      s.imported[r.fileKey] = true;
+    });
     ui.importReview = null;
-    toast(`Saved. ${matched} credit${matched === 1 ? '' : 's'} ticked off.`);
+    toast(`Saved. ${matched} credit${matched === 1 ? '' : 's'} ticked off, ${r.merchants.length} brands noted.`);
   } else if (a === 'export-ics') {
     download('card-credit-reminders.ics', buildIcs(state), 'text/calendar');
   } else if (a === 'add-card') {
@@ -677,7 +715,8 @@ app.addEventListener('change', (e) => {
           creditId: suggestCredit(t.description, cardId, credits, state.importRules),
           already: !!state.imported[`${cardId}|${t.id}`],
         }));
-      ui.importReview = { cardId, format, lines };
+      const fileKey = `${cardId}|file|${transactions.length}|${transactions[0] && transactions[0].id}|${transactions[transactions.length - 1].id}`;
+      ui.importReview = { cardId, format, lines, fileKey, merchants: state.imported[fileKey] ? [] : merchantsFromStatement(transactions) };
       render();
     }).catch(() => toast('Could not read that file.'));
   } else if (a === 'valuation') {

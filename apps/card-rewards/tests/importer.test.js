@@ -101,3 +101,29 @@ test('setup checklist lists activation steps', () => {
   assert.equal(list.find((x) => x.credit.id === 'lyft').done, true);
   assert.equal(list.find((x) => x.credit.id === 'stubhub').done, false);
 });
+
+test('offer list parsing and matching to statement brands', async () => {
+  const { parseOfferList, matchOffers, mergeMerchants } = await import('../js/importer.js');
+  const list = parseOfferList(JSON.stringify({
+    source: 'card-rewards-offer-helper', issuer: 'amex', capturedAt: '2026-11-19T00:00:00Z',
+    offers: [
+      { merchant: 'The Home Depot', text: 'Spend $100, get $15 back' },
+      { merchant: 'Starbucks', text: 'Earn 10% back' },
+      { merchant: 'HomeGoods', text: 'Spend $50, get $10' },
+      { merchant: 'Hilton', text: '' },
+    ],
+  }));
+  assert.equal(list.issuer, 'amex');
+  assert.throws(() => parseOfferList('{"offers": []}'));
+  assert.throws(() => parseOfferList('not json'));
+
+  const merchants = mergeMerchants({}, [
+    { name: 'THE HOME DEPOT', count: 2 },
+    { name: 'STARBUCKS STORE', count: 5 },
+    { name: 'MARRIOTT BOSTON', count: 1 },
+  ]);
+  const hits = matchOffers({ amex: list }, merchants);
+  assert.deepEqual(hits.map((h) => h.offer.merchant), ['Starbucks', 'The Home Depot']);
+  assert.equal(hits[0].count, 5);
+  assert.equal(mergeMerchants(merchants, [{ name: 'STARBUCKS STORE', count: 1 }])['STARBUCKS STORE'].count, 6);
+});

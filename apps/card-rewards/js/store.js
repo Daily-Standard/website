@@ -3,7 +3,7 @@
 const KEY = 'card-rewards-state-v1';
 
 export function emptyState() {
-  return { version: 1, wallet: [], customCards: [], valuations: {}, usage: {}, imported: {}, importRules: [] };
+  return { version: 1, wallet: [], customCards: [], valuations: {}, usage: {}, imported: {}, importRules: [], merchants: {}, offers: {} };
 }
 
 export function loadState() {
@@ -36,5 +36,7 @@ export function normalize(data) {
     usage: data.usage && typeof data.usage === 'object' ? data.usage : {},
     imported: data.imported && typeof data.imported === 'object' ? data.imported : {},
     importRules: Array.isArray(data.importRules) ? data.importRules : [],
+    merchants: data.merchants && typeof data.merchants === 'object' ? data.merchants : {},
+    offers: data.offers && typeof data.offers === 'object' ? data.offers : {},
   };
 }
