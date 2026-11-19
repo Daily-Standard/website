@@ -216,6 +216,16 @@ function round2(n) {
 
 // ---------- credits / benefits ----------
 
+export function isPerk(credit) {
+  return credit.kind === 'perk';
+}
+
+/** The annual fee the user actually pays (their override, else the catalog fee). */
+export function annualFeeFor(entry, card) {
+  if (entry && typeof entry.annualFee === 'number' && entry.annualFee >= 0) return entry.annualFee;
+  return card ? card.annualFee : 0;
+}
+
 export function usageKey(cardId, creditId, periodKey) {
   return `${cardId}::${creditId}::${periodKey}`;
 }
@@ -240,7 +250,8 @@ export function creditStatus(entry, credit, state, now = new Date()) {
 }
 
 /** Within this many days of a period ending, an unused credit counts as "expiring soon". */
-export function expiringThreshold(cadence) {
+export function expiringThreshold(cadence, credit) {
+  if (credit && isPerk(credit)) return 60;
   return cadence === 'monthly' ? 7 : 30;
 }
 
@@ -256,19 +267,22 @@ export function cardBenefitSummary(entry, state, now = new Date()) {
   const year = now.getFullYear();
   const prefix = `${entry.cardId}::`;
 
+  const perkIds = new Set(credits.filter(isPerk).map((c) => c.id));
   let usedThisYear = 0;
   for (const [key, value] of Object.entries(usage)) {
     if (!key.startsWith(prefix)) continue;
-    const periodKey = key.split('::')[2] || '';
+    const [, creditId, periodKey = ''] = key.split('::');
+    if (perkIds.has(creditId)) continue;
     if (periodKey.startsWith(String(year))) usedThisYear += value;
   }
 
   let availableNow = 0;
   let leftThisYear = 0;
   const statuses = credits.map((credit) => creditStatus(entry, credit, state, now));
-  for (const s of statuses) availableNow += s.remaining;
+  for (const s of statuses) if (!isPerk(s.credit)) availableNow += s.remaining;
 
   for (const credit of credits) {
+    if (isPerk(credit)) continue;
     const yearEnd = new Date(year + 1, 0, 1);
     let p = periodFor(credit.cadence, now, entry.anniversaryMonth);
     while (p.start < yearEnd) {
@@ -281,12 +295,26 @@ export function cardBenefitSummary(entry, state, now = new Date()) {
 
   return {
     card,
-    fee: card ? card.annualFee : 0,
+    fee: annualFeeFor(entry, card),
     usedThisYear: round2(usedThisYear),
     availableNow: round2(availableNow),
     leftThisYear: round2(leftThisYear),
     statuses,
   };
+}
+
+/** Benefits that need a one-time activation or setup step, with done/not-done. */
+export function setupChecklist(state) {
+  const out = [];
+  for (const entry of state.wallet || []) {
+    const card = getCard(entry.cardId, state);
+    for (const credit of creditsFor(entry, state)) {
+      if (!credit.setup) continue;
+      const done = !!(entry.setupDone && entry.setupDone[credit.id]);
+      out.push({ entry, card, credit, done });
+    }
+  }
+  return out;
 }
 
 /** Unused credits whose current period ends soon, soonest first. */
@@ -295,7 +323,7 @@ export function expiringSoon(state, now = new Date()) {
   for (const entry of state.wallet || []) {
     for (const credit of creditsFor(entry, state)) {
       const s = creditStatus(entry, credit, state, now);
-      if (s.remaining > 0 && s.daysLeft <= expiringThreshold(credit.cadence)) {
+      if (s.remaining > 0 && s.daysLeft <= expiringThreshold(credit.cadence, credit)) {
         out.push({ entry, card: getCard(entry.cardId, state), ...s });
       }
     }
@@ -340,7 +368,7 @@ export function buildIcs(state, now = new Date(), daysBefore = 5) {
           `DTSTAMP:${stamp}`,
           `DTSTART;VALUE=DATE:${icsDate(remind)}`,
           `DTEND;VALUE=DATE:${icsDate(next)}`,
-          `SUMMARY:${icsEscape(`Use $${amount} ${credit.name} (${card.name})`)}`,
+          `SUMMARY:${icsEscape(isPerk(credit) ? `Use your ${credit.name} (${card.name})` : `Use $${amount} ${credit.name} (${card.name})`)}`,
           `DESCRIPTION:${icsEscape(`Resets ${p.end.toDateString()}. ${credit.note || ''}`.trim())}`,
           'END:VEVENT',
         );

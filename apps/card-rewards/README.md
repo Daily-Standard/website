@@ -3,7 +3,7 @@
 A phone-friendly web app that:
 
 1. **Picks the best card for each purchase.** Search a store (Costco, Whole Foods, Uber…) or a category (dining, gas…) and it ranks the cards in your wallet by the value you'd get back. It knows about network acceptance (Costco takes Visa only), stores that don't count as grocery (Walmart, Target), quarterly 5% categories that need activation, choose-your-category cards, and higher rates that only apply when booking through a card's travel site (shown as tips).
-2. **Tracks unused card benefits.** Every monthly, quarterly, half-year and annual credit on your cards, with "use soon or lose it" alerts, a fee-vs-value-used bar per card, and a calendar file of reminders before each credit resets.
+2. **Tracks unused card benefits.** Imports your Chase/Amex CSV statements to tick off credits automatically, lists benefits that need a one-time activation, tracks free night awards, and lets you set the annual fee you actually pay. It covers every monthly, quarterly, half-year and annual credit on your cards, with "use soon or lose it" alerts, a fee-vs-value-used bar per card, and a calendar file of reminders before each credit resets.
 
 No bank linking, no account, nothing sent to a server: your data stays in your browser (`localStorage`). Export/import a backup from the Wallet tab.
 
@@ -23,11 +23,12 @@ It must be served over http(s); opening `index.html` directly from disk won't lo
 
 | Path | Purpose |
 |---|---|
-| `js/data/cards.js` | Card catalog: earning rules, fees, credits (22 popular US cards) |
+| `js/data/cards.js` | Card catalog: earning rules, fees, credits (26 US cards) |
 | `js/data/merchants.js` | ~50 common merchants, their usual category and quirks |
 | `js/engine.js` | Ranking, benefit periods, usage summaries, calendar export (no DOM; unit-tested) |
 | `js/app.js` | The interface (Pay, Benefits, Wallet tabs) |
 | `js/store.js` | Saves state in the browser |
+| `js/importer.js` | Reads Chase/Amex CSV statements, matches statement credits to benefits |
 | `tests/engine.test.js` | Unit tests |
 
 ## Card data accuracy

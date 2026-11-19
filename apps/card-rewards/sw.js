@@ -1,5 +1,5 @@
 // Offline support: cache the app shell, serve cache-first, refresh in the background.
-const CACHE = 'card-rewards-v1';
+const CACHE = 'card-rewards-v2';
 const FILES = [
   './',
   'index.html',
@@ -11,6 +11,7 @@ const FILES = [
   'js/app.js',
   'js/engine.js',
   'js/store.js',
+  'js/importer.js',
   'js/data/cards.js',
   'js/data/merchants.js',
 ];

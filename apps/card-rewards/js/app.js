@@ -2,8 +2,9 @@ import { CARDS, CATEGORIES, CURRENCIES, NETWORK_NAMES, DATA_AS_OF } from './data
 import { MERCHANTS } from './data/merchants.js';
 import {
   rankCards, getCard, pointValue, creditsFor, creditStatus, cardBenefitSummary,
-  expiringSoon, usageKey, quarterKey, buildIcs,
+  expiringSoon, usageKey, quarterKey, buildIcs, isPerk, annualFeeFor, setupChecklist,
 } from './engine.js';
+import { readStatement, suggestCredit, applyMatches } from './importer.js';
 import { loadState, saveState, normalize, emptyState } from './store.js';
 
 // ---------- state ----------
@@ -15,6 +16,7 @@ const ui = {
   selection: null,          // { type: 'merchant'|'category', id }
   openCard: null,           // wallet card id expanded in Wallet tab
   showAddCustom: false,
+  importReview: null,       // { cardId, format, lines: [{ id, date, description, amount, creditId, already }] }
   toast: '',
 };
 
@@ -197,6 +199,8 @@ function renderBenefits() {
       <div><p class="eyebrow">Still available in ${year}</p><p class="stat accent">${money(totalLeft)}</p></div>
     </section>
 
+    ${setupHtml()}
+
     ${soon.length ? `
       <section class="panel urgent">
         <h3 class="section-label">Use soon or lose it</h3>
@@ -209,9 +213,13 @@ function renderBenefits() {
           <h3>${esc(s.card.name)}</h3>
           <p class="muted small">Fee ${money(s.fee)} · used ${money(s.usedThisYear)} in ${year}</p>
         </div>
+        ${!s.entry.anniversaryMonth && s.statuses.some((st) => st.credit.cadence === 'cardmember_year')
+          ? `<p class="warn">Set this card's anniversary month in Wallet so card-year benefits reset on the right date. <button class="btn small ghost" data-action="open-card" data-id="${s.card.id}">Set it</button></p>` : ''}
         ${feeBarHtml(s.fee, s.usedThisYear)}
         ${s.statuses.map((st) => creditRowHtml(s.entry, st, false)).join('')}
       </section>`).join('') : '<section class="panel"><p class="muted">None of your cards have credits in our list. You can add your own credits from the Wallet tab.</p></section>'}
+
+    ${importHtml()}
 
     ${withCredits.length ? `
       <section class="panel">
@@ -235,20 +243,87 @@ function creditRowHtml(entry, s, showCard) {
   const card = getCard(entry.cardId, state);
   const done = s.remaining <= 0;
   const key = usageKey(entry.cardId, s.credit.id, s.period.key);
+  const perk = isPerk(s.credit);
+  const amountText = perk ? `1 ${s.credit.unit || 'perk'}` : money(s.amount);
+  const statusText = done ? 'used' : perk ? daysLabel(s.daysLeft) : `${money(s.remaining)} left · ${daysLabel(s.daysLeft)}`;
   return `
     <div class="credit ${done ? 'done' : ''}">
       <div class="credit-main">
         <p class="credit-name">${esc(s.credit.name)}</p>
-        <p class="muted small">${showCard ? `${esc(card.name)} · ` : ''}${money(s.amount)} ${CADENCE[s.credit.cadence]} · ${done ? 'used' : `${money(s.remaining)} left · ${daysLabel(s.daysLeft)}`}</p>
+        <p class="muted small">${showCard ? `${esc(card.name)} · ` : ''}${amountText} ${CADENCE[s.credit.cadence]} · ${statusText}</p>
         ${s.credit.note ? `<p class="muted small">${esc(s.credit.note)}</p>` : ''}
       </div>
       <div class="credit-actions">
         ${done
           ? `<button class="btn small ghost" data-action="set-used" data-key="${esc(key)}" data-value="0">Undo</button>`
           : `<button class="btn small primary" data-action="set-used" data-key="${esc(key)}" data-value="${s.amount}">Used</button>
-             <button class="btn small ghost" data-action="partial" data-key="${esc(key)}" data-max="${s.amount}" data-used="${s.used}">Part</button>`}
+             ${perk ? '' : `<button class="btn small ghost" data-action="partial" data-key="${esc(key)}" data-max="${s.amount}" data-used="${s.used}">Part</button>`}`}
       </div>
     </div>`;
+}
+
+function setupHtml() {
+  const list = setupChecklist(state);
+  const todo = list.filter((x) => !x.done);
+  if (!list.length) return '';
+  if (!todo.length) return `<p class="fine">All ${list.length} benefit activations done.</p>`;
+  return `
+    <section class="panel">
+      <h3 class="section-label">Activate these once (${todo.length} left)</h3>
+      <p class="muted small">These benefits only pay out after a one-time setup.</p>
+      ${todo.map((x) => `
+        <div class="credit">
+          <div class="credit-main">
+            <p class="credit-name">${esc(x.credit.name)}</p>
+            <p class="muted small">${esc(x.card.name)} · ${esc(x.credit.setup)}</p>
+          </div>
+          <div class="credit-actions">
+            <button class="btn small primary" data-action="setup-done" data-card="${x.card.id}" data-id="${x.credit.id}">Done</button>
+          </div>
+        </div>`).join('')}
+    </section>`;
+}
+
+function importHtml() {
+  const cardsWithCredits = state.wallet.filter((e) => creditsFor(e, state).some((c) => !isPerk(c)));
+  if (!cardsWithCredits.length) return '';
+  const r = ui.importReview;
+  if (r) {
+    const entry = entryFor(r.cardId);
+    const credits = creditsFor(entry, state).filter((c) => !isPerk(c));
+    const fresh = r.lines.filter((l) => !l.already);
+    return `
+      <section class="panel">
+        <h3 class="section-label">Statement credits found</h3>
+        <p class="muted small">${esc(getCard(r.cardId, state).name)}: ${fresh.length} new credit${fresh.length === 1 ? '' : 's'}${r.lines.length - fresh.length ? `, ${r.lines.length - fresh.length} already imported` : ''}.${fresh.length ? ' Check where each one belongs; the app remembers your choices for next time.' : ''}</p>
+        ${fresh.map((l) => `
+          <div class="import-line">
+            <div>
+              <p class="credit-name">${esc(money(l.amount))} · ${esc(l.description)}</p>
+              <p class="muted small">${esc(l.date.toLocaleDateString())}</p>
+            </div>
+            <select data-action="import-assign" data-id="${esc(l.id)}" aria-label="Which benefit is this?">
+              <option value="">Not a tracked benefit</option>
+              ${credits.map((c) => `<option value="${c.id}" ${l.creditId === c.id ? 'selected' : ''}>${esc(c.name)}</option>`).join('')}
+            </select>
+          </div>`).join('') || '<p class="muted">Nothing new in this file.</p>'}
+        <div class="row wrap">
+          ${fresh.length ? '<button class="btn primary" data-action="import-apply">Save</button>' : ''}
+          <button class="btn ghost" data-action="import-cancel">Cancel</button>
+        </div>
+      </section>`;
+  }
+  return `
+    <section class="panel">
+      <h3 class="section-label">Import a statement</h3>
+      <p class="muted small">On chase.com or americanexpress.com, download your recent card activity as a CSV file, then pick it here. The app finds statement credits and ticks off the benefits they count toward. The file is read on this device only.</p>
+      <div class="row wrap">
+        <select id="import-card" aria-label="Which card is this statement for?">
+          ${cardsWithCredits.map((e) => `<option value="${e.cardId}">${esc(getCard(e.cardId, state).name)}</option>`).join('')}
+        </select>
+        <label class="btn">Choose CSV file<input type="file" accept=".csv,text/csv" data-action="import-file" hidden></label>
+      </div>
+    </section>`;
 }
 
 // ----- Wallet tab -----
@@ -326,7 +401,7 @@ function walletCardHtml(entry) {
     <li class="wallet-card ${open ? 'open' : ''}">
       <button class="wallet-toggle" data-action="toggle-card" data-id="${card.id}" aria-expanded="${open}">
         <span>${esc(card.name)}</span>
-        <span class="muted small">${NETWORK_NAMES[card.network] || ''} · ${card.annualFee ? `${money(card.annualFee)}/yr` : 'No annual fee'}</span>
+        <span class="muted small">${NETWORK_NAMES[card.network] || ''} · ${annualFeeFor(entry, card) ? `${money(annualFeeFor(entry, card))}/yr` : 'No annual fee'}</span>
       </button>
       ${open ? walletCardDetailHtml(entry, card) : ''}
     </li>`;
@@ -361,6 +436,10 @@ function walletCardDetailHtml(entry, card) {
     <div class="wallet-detail">
       <p class="small"><a href="${esc(card.url || '#')}" target="_blank" rel="noopener">Check current terms on the issuer's site ↗</a></p>
       <p class="small muted">Earns: ${esc(earnSummary(card))}</p>
+      <label class="field inline">
+        <span>Annual fee you pay</span>
+        <span class="with-unit"><span>$</span><input type="number" inputmode="decimal" min="0" step="1" data-action="fee" data-card="${card.id}" value="${annualFeeFor(entry, card)}"></span>
+      </label>
       ${choice ? `
         <label class="field">
           <span>Your ${choice.rate}% category</span>
@@ -496,6 +575,26 @@ app.addEventListener('click', (e) => {
     const v = Number(String(input).replace(/[$,\s]/g, ''));
     if (!Number.isFinite(v) || v < 0) { toast('Enter a dollar amount.'); return; }
     commit((s) => { if (v > 0) s.usage[el.dataset.key] = Math.min(v, max); else delete s.usage[el.dataset.key]; });
+  } else if (a === 'open-card') {
+    ui.openCard = el.dataset.id;
+    setTab('wallet');
+  } else if (a === 'setup-done') {
+    commit(() => {
+      const entry = entryFor(el.dataset.card);
+      entry.setupDone = { ...(entry.setupDone || {}), [el.dataset.id]: true };
+    });
+  } else if (a === 'import-cancel') {
+    ui.importReview = null;
+    render();
+  } else if (a === 'import-apply') {
+    const r = ui.importReview;
+    const entry = entryFor(r.cardId);
+    const credits = creditsFor(entry, state);
+    const fresh = r.lines.filter((l) => !l.already);
+    const matched = fresh.filter((l) => l.creditId).length;
+    commit((s) => Object.assign(s, applyMatches(s, entry, credits, fresh)));
+    ui.importReview = null;
+    toast(`Saved. ${matched} credit${matched === 1 ? '' : 's'} ticked off.`);
   } else if (a === 'export-ics') {
     download('card-credit-reminders.ics', buildIcs(state), 'text/calendar');
   } else if (a === 'add-card') {
@@ -556,7 +655,32 @@ app.addEventListener('change', (e) => {
   const entry = el.dataset.card ? entryFor(el.dataset.card) : null;
   const qk = quarterKey(new Date());
 
-  if (a === 'valuation') {
+  if (a === 'fee') {
+    const v = Number(el.value);
+    if (Number.isFinite(v) && v >= 0) commit(() => { entry.annualFee = v; });
+  } else if (a === 'import-assign') {
+    const line = ui.importReview && ui.importReview.lines.find((l) => l.id === el.dataset.id);
+    if (line) line.creditId = el.value || null;
+  } else if (a === 'import-file') {
+    const file = el.files && el.files[0];
+    const cardId = document.getElementById('import-card').value;
+    if (!file || !cardId) return;
+    file.text().then((text) => {
+      const { format, transactions, error } = readStatement(text);
+      if (error) { toast(error); return; }
+      const imp = entryFor(cardId);
+      const credits = creditsFor(imp, state).filter((c) => !isPerk(c));
+      const lines = transactions
+        .filter((t) => t.isCredit && !t.isPayment)
+        .map((t) => ({
+          ...t,
+          creditId: suggestCredit(t.description, cardId, credits, state.importRules),
+          already: !!state.imported[`${cardId}|${t.id}`],
+        }));
+      ui.importReview = { cardId, format, lines };
+      render();
+    }).catch(() => toast('Could not read that file.'));
+  } else if (a === 'valuation') {
     const v = Number(el.value);
     if (Number.isFinite(v) && v > 0) commit((s) => { s.valuations[el.dataset.currency] = v; });
   } else if (a === 'choice') {
